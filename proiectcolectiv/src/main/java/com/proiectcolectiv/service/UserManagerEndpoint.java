@@ -24,6 +24,16 @@ public class UserManagerEndpoint implements IUserManagerEndpoint {
     }
 
     @Override
+    public String logIn(String username, String password) {
+        String result = "Log in";
+        User u = userRepository.getByUsernameAndPassword(username, password);
+        if (u == null) {
+            return result + " failed!";
+        }
+        return result + " succesfull";
+    }
+
+    @Override
     public User create(User user) {
         return userRepository.saveAndFlush(user);
     }
