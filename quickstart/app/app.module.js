@@ -10,15 +10,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
+var router_1 = require('@angular/router');
 var app_component_1 = require('./app.component');
+var login_form_component_1 = require('./forms/login-form.component');
+var register_form_component_1 = require('./forms/register-form.component');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule],
-            declarations: [app_component_1.AppComponent],
-            bootstrap: [app_component_1.AppComponent]
+            imports: [
+                platform_browser_1.BrowserModule,
+                router_1.RouterModule.forRoot([
+                    {
+                        path: 'register',
+                        component: register_form_component_1.RegisterFormComponent
+                    },
+                    {
+                        path: 'login',
+                        component: login_form_component_1.LoginFormComponent
+                    },
+                ])
+            ],
+            declarations: [
+                app_component_1.AppComponent,
+                login_form_component_1.LoginFormComponent,
+                register_form_component_1.RegisterFormComponent
+            ],
+            bootstrap: [
+                app_component_1.AppComponent,
+                login_form_component_1.LoginFormComponent,
+                register_form_component_1.RegisterFormComponent
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);
