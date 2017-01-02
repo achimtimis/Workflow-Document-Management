@@ -1,6 +1,6 @@
 package com.proiectcolectiv.controller;
 
-import com.proiectcolectiv.models.User;
+import com.proiectcolectiv.models.user.User;
 import com.proiectcolectiv.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/users")
-public class UserManagerController {
+public class UserController {
 
 
     @Autowired
