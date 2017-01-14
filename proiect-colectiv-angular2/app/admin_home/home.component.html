@@ -1,0 +1,18 @@
+<div class="col-md-6 col-md-offset-3">
+	<h3>Welcome, {{currentUser.username}}. You are logged in as {{currentUser.role}}</h3>
+	
+	<h3>All registered users:</h3>
+	<ul class="items">
+		<li *ngFor="let user of users | async"><span class="badge">{{user.id}}</span>
+			{{user.username}} - <a (click)="deleteUser(user.id)">Delete</a> | <a
+			[class.selected]="isSelected(user)" (click)="updateUser(user)">Update</a>
+		</li>
+	</ul>
+	<p>
+		<a [routerLink]="['/create']">Create New User</a>
+	</p>
+	<p>
+		<a [routerLink]="['/login']">Logout</a>
+	</p>
+
+</div>
