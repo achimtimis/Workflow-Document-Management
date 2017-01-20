@@ -4,16 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { routing } from './app.routing';
+import { routing } from './routing/app.routing';
 
-import { AlertComponent } from './_directives/index';
-import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, UserService } from './_services/index';
-import { HomeComponent } from './admin_home/index';
-import { LoginComponent } from './login/index';
-import { RegisterComponent } from './register/index';
-import { CreateComponent } from './create/index';
-import { UpdateComponent } from './update/index';
+import { AlertComponent,AuthGuard,AlertService, AuthenticationService } from './core/index';
+import { UserService } from './users/index';
+import { HomeComponent,CreateComponent,UpdateComponent } from './pages/admin.page/index';
+import { LoginComponent } from './pages/login/index';
+import { RegisterComponent } from './pages/register/index';
 
 @NgModule({
   imports: [

@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { AlertService, UserService } from '../_services/index';
+import {UserService } from '../../users/index';
+import { AlertService} from '../../core/index';
 
 @Component({
     moduleId: module.id,
-    templateUrl: 'create.component.html'
+    templateUrl: 'register.component.html'
 })
 
-export class CreateComponent {
+export class RegisterComponent {
     model: any = {};
     loading = false;
 
@@ -16,18 +16,18 @@ export class CreateComponent {
         private router: Router,
         private userService: UserService,
         private alertService: AlertService) { }
-        
-     createNewUser(){
-       this.loading = true;
-       this.userService.create(this.model)
+
+    register() {
+        this.loading = true;
+        this.userService.create(this.model)
             .subscribe(
                 data => {
-                    this.alertService.success('User created', true);
-                    this.router.navigate(['']);
+                    this.alertService.success('Registration successful', true);
+                    this.router.navigate(['/login']);
                 },
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
                 });
-     }
+    }
 }

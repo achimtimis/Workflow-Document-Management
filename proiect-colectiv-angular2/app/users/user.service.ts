@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
-import { User } from '../_models/index';
+import { User } from './user';
 
 let USERS = [ new User (1,'admins','pass','manager')];
 let   hpromise = Promise.resolve(USERS);

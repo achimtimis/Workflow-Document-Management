@@ -1,11 +1,10 @@
 ﻿import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './admin_home/index';
-import { LoginComponent } from './login/index';
-import { RegisterComponent } from './register/index';
-import { CreateComponent } from './create/index';
-import { UpdateComponent } from './update/index'
-import { AuthGuard } from './_guards/index';
+import { AlertComponent,AuthGuard,AlertService, AuthenticationService } from '../core/index';
+import { UserService } from '../users/index';
+import { HomeComponent,CreateComponent,UpdateComponent } from '../pages/admin.page/index';
+import { LoginComponent } from '../pages/login/index';
+import { RegisterComponent } from '../pages/register/index';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },

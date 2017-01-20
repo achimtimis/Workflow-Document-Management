@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { User } from '../_models/index';
-import { UserService } from '../_services/index';
+import { User } from '../../users/index';
+import { UserService } from '../../users/index';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs'
 import 'rxjs/add/operator/map';
