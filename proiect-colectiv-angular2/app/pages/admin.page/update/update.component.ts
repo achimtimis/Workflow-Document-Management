@@ -12,21 +12,23 @@ import { AlertService} from '../../../core/index';
 export class UpdateComponent {
   model: any = {};
   loading = false;
-  user: User;
+  user: User ;
+  currentUser : User = JSON.parse(localStorage.getItem('currentUser'));
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
     private alertService: AlertService) {
-    this.userService.getById(15).subscribe(user => { this.user = user; });
+    
   }
 
   ngOnInit() {
-    this.route.params
-      // (+) converts string 'id' to a number
-      .switchMap((params: Params) => this.userService.getById(+params['id']))
-      .subscribe((user: User) => this.user = user);
+    this.route.params.subscribe((params: Params) => {
+        let userId = params['id'];
+        this.userService.getById(userId).subscribe(user => { this.user = user; 
+          this.model = user;});
+      });
   }
   updateUser() {
     this.loading = true;

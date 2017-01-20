@@ -13,4 +13,8 @@
   get id(): number {
     return this.id;
   }
+  
+  get password(): string {
+    return this.password;
+  }
 }

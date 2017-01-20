@@ -51,6 +51,10 @@ public class User implements Serializable {
 	public void setRole(UserRole role) {
 		this.role = role;
 	}
+	
+	public UserRole getRole(){
+		return this.role;
+	}
 
 	public User(Long id, String username, String password, UserRole role){
 		this.id = id;

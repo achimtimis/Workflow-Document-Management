@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService } from '../../../users/index';
+import { User, UserService } from '../../../users/index';
 import { AlertService } from '../../../core/index';
 
 @Component({
@@ -10,13 +10,17 @@ import { AlertService } from '../../../core/index';
 })
 
 export class CreateComponent {
+  
+    currentUser: User;
     model: any = {};
     loading = false;
 
     constructor(
         private router: Router,
         private userService: UserService,
-        private alertService: AlertService) { }
+        private alertService: AlertService) { 
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    }
         
      createNewUser(){
        this.loading = true;

@@ -2,17 +2,17 @@
 
 import { AlertComponent,AuthGuard,AlertService, AuthenticationService } from '../core/index';
 import { UserService } from '../users/index';
-import { HomeComponent,CreateComponent,UpdateComponent } from '../pages/admin.page/index';
-import { LoginComponent } from '../pages/login/index';
-import { RegisterComponent } from '../pages/register/index';
+import { LoginComponent, RegisterComponent, HomeComponent, CreateComponent, UpdateComponent,
+          ManageComponent} from '../pages/index';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'create', component: CreateComponent },
   { path: 'update/:id', component: UpdateComponent },
-  { path: '**', redirectTo: '' }
+  { path: 'manage', component: ManageComponent },
+  { path: '**', redirectTo: 'home' }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

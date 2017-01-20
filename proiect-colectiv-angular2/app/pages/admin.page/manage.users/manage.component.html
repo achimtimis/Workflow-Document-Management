@@ -1,0 +1,25 @@
+<nav class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-inverse">
+    <div class="container">
+        <ul class="nav navbar-nav" routerLinkActive="active">
+        	<li class="nav-item"><a class="nav-link">You are logged in as '{{currentUser.role}}'</a></li>
+        	<li class="nav-item"><a class="nav-link" [routerLink]="['/home']">Home</a></li>
+        	<li class="nav-item"><a class="nav-link" [routerLink]="['/manage']">Manage Users</a></li>
+        	<li class="nav-item"><a class="nav-link" [routerLink]="['/login']">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>
+<div class="col-md-6 col-md-offset-3">
+	<h4>All registered users:</h4>
+	<ul class="items">
+		<li *ngFor="let user of users | async"><span class="badge">{{user.id}}</span>
+			{{user.username}} - <a (click)="deleteUser(user.id)">Delete</a> | <a
+			[class.selected]="isSelected(user)" (click)="updateUser(user)">Update</a>
+		</li>
+	</ul>
+	<div class="form-group">
+            <a [routerLink]="['/create']" class="btn btn-link">Create New User</a>
+            <a [routerLink]="['/home']" class="btn btn-link">Cancel</a>
+        </div>
+</div>

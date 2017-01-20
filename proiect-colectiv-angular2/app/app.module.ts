@@ -8,9 +8,8 @@ import { routing } from './routing/app.routing';
 
 import { AlertComponent,AuthGuard,AlertService, AuthenticationService } from './core/index';
 import { UserService } from './users/index';
-import { HomeComponent,CreateComponent,UpdateComponent } from './pages/admin.page/index';
-import { LoginComponent } from './pages/login/index';
-import { RegisterComponent } from './pages/register/index';
+import { HomeComponent,CreateComponent,UpdateComponent, RegisterComponent, LoginComponent,
+          ManageComponent} from './pages/index';
 
 @NgModule({
   imports: [
@@ -26,7 +25,8 @@ import { RegisterComponent } from './pages/register/index';
     LoginComponent,
     RegisterComponent,
     CreateComponent,
-    UpdateComponent
+    UpdateComponent,
+    ManageComponent
   ],
   providers: [
     AuthGuard,
