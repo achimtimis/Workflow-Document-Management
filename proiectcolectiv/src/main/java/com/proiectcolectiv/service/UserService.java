@@ -54,6 +54,13 @@ public class UserService {
                 userDocumentMappingRepository.delete(u);
             }
         }
+        for (UserGroup u : userGroupRepository.findAll()){
+            for (User us : u.getUsers()){
+                if (us.getId() == id){
+                    userGroupRepository.delete(u);
+                }
+            }
+        }
         userRepository.delete(existingUser);
         return existingUser;
     }
