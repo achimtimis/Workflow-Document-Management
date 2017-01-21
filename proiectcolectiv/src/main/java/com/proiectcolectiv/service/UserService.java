@@ -55,10 +55,16 @@ public class UserService {
             }
         }
         for (UserGroup u : userGroupRepository.findAll()){
-            for (User us : u.getUsers()){
-                if (us.getId() == id){
-                    userGroupRepository.delete(u);
+//            for (User us : u.getUsers()){
+            List<User> users = u.getUsers();
+            for (int i = 0; i<users.size();i++){
+                if (users.get(i).getId() == id){
+//                    userGroupRepository.delete(u);
+                    users.remove(i);
+                    u.setUsers(users);
+                    userGroupRepository.save(u);
                 }
+
             }
         }
         userRepository.delete(existingUser);
