@@ -38,7 +38,6 @@ public class Document extends DocumentMetaData {
         this.documentType = documentType;
         this.status = status;
     }
-
     private String name;
 
     private String details;
