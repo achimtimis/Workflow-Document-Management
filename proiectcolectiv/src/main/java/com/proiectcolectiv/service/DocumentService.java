@@ -3,11 +3,13 @@ package com.proiectcolectiv.service;
 import com.proiectcolectiv.models.document.Document;
 import com.proiectcolectiv.models.document.UserDocument;
 import com.proiectcolectiv.models.document.UserDocumentMapping;
+import com.proiectcolectiv.models.user.User;
 import com.proiectcolectiv.repository.DocumentRepository;
 import com.proiectcolectiv.repository.UserDocumentMappingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -58,5 +60,16 @@ public class DocumentService {
 
     public List<Document> getAllDocuments() {
         return documentRepository.findAll();
+    }
+
+    public List<Document> getAllDocumentsByUser(int id) {
+        List<Document> result = new ArrayList<>();
+        List<UserDocumentMapping> list = userDocumentMappingRepository.findAll();
+        for (UserDocumentMapping m : list){
+            if (m.getUser().getId() == id) {
+                result.add(documentRepository.getOne(m.getDocument().getId()));
+            }
+        }
+        return result;
     }
 }

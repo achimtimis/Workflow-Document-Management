@@ -51,6 +51,11 @@ public class DocumentController {
         return documentService.createUserDocument(document);
     }
 
+    @RequestMapping(value = "/byUser/{id}", method = RequestMethod.GET)
+    public List<Document> getAllDocuments(@PathVariable int id) {
+        return documentService.getAllDocumentsByUser(id);
+    }
+
 
 
 }
