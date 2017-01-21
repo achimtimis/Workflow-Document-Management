@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AlertService } from '../../../core/index';
 import { User, UserService } from '../../../users/index';
 import { Group } from '../../../groups/group';
 import { Document, DocumentService } from '../../../documents/index';
@@ -27,8 +28,8 @@ export class ManageDocumentsComponent implements OnInit {
   private selectedGroupId: number;
   loading = false;
 
-  constructor(private documentService: DocumentService, private userService: UserService,
-    private route: ActivatedRoute, private router: Router) {
+  constructor(private documentService: DocumentService, private alertService: AlertService,
+    private userService: UserService, private route: ActivatedRoute, private router: Router) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.fluxDocuments = new Array<Document>();
     this.fluxGroups = new Array<Group>();
@@ -87,6 +88,15 @@ export class ManageDocumentsComponent implements OnInit {
 
   private finalizeFlux() {
     this.loading = true;
-    return this.documentService.addFlux(this.fluxDocuments, this.fluxGroups);
+    this.documentService.addFlux(this.fluxDocuments, this.fluxGroups)
+      .subscribe(
+      data => {
+        this.alertService.success('Success', true);
+        this.router.navigate(['/manageGroups']);
+      },
+      error => {
+        this.alertService.error(error);
+        this.loading = false;
+      });
   }
 }

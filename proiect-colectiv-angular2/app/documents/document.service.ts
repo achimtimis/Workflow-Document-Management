@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
+import { DocumentFlux } from '.././document.flux/index';
 import { Document, UserDocument } from './index';
 import { User } from '.././users/index';
 import { Group } from '.././groups';
@@ -37,7 +37,8 @@ export class DocumentService {
   }
 
   addFlux(documents: Array<Document>, userGroups: Array<Group>) {
-    return this.http.post('http://localhost:8080/documents/createFlux', documents,
+    let flux = new DocumentFlux(1,documents,userGroups);
+    return this.http.post('http://localhost:8080/documents/createFlux', flux,
       this.jwt()).map((response: Response) => response.json());
   }
   private jwt() {
