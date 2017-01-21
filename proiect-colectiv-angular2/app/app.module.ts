@@ -12,7 +12,7 @@ import { DocumentService } from './documents/index';
 import {
   HomeComponent, CreateComponent, UpdateComponent, RegisterComponent, LoginComponent,
   ManageComponent, ManagerHomeComponent, CreateDocumentComponent, ManageDocumentsComponent, 
-  UpdateDocumentComponent, ManageGroupsComponent,
+  UpdateDocumentComponent, ManageGroupsComponent,DocumentViewComponent,
 } from './pages/index';
 
 @NgModule({
@@ -36,6 +36,7 @@ import {
     ManageDocumentsComponent,
     UpdateDocumentComponent,
     ManageGroupsComponent,
+    DocumentViewComponent,
   ],
   providers: [
     AuthGuard,

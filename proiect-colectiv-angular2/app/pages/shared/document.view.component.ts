@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 
-import { User, UserService } from '../../../users/index'
-import { Document, DocumentService } from '../../../documents/index';
-import { AlertService } from '../../../core/index';
+import { User, UserService } from '../../users/index'
+import { Document, DocumentService } from '../../documents/index';
+import { AlertService } from '../../core/index';
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'update.document.html'
+  templateUrl: 'document.view.html'
 })
 
-export class UpdateDocumentComponent {
+export class DocumentViewComponent {
   model: any = {};
   loading = false;
   user: User;
