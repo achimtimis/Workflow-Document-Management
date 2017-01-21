@@ -36,7 +36,7 @@ export class UpdateComponent {
       .subscribe(
       data => {
         this.alertService.success('User updated', true);
-        this.router.navigate(['']);
+        this.router.navigate(['/admin/manage']);
       },
       error => {
         this.alertService.error(error);

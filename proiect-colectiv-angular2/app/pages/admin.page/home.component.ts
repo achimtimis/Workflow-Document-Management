@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
   }
 
   updateUser(user: User) {
-    this.router.navigate(['/update', user.id]);
+    this.router.navigate(['/admin/update', user.id]);
   }
   private loadAllUsers() {
     this.users = this.route.params

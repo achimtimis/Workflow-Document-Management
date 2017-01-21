@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { User, UserService  } from '../../../users/index';
+import { User } from '../../users/index';
+import { UserService } from '../../users/index';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs'
 import 'rxjs/add/operator/map';
@@ -8,10 +9,10 @@ import 'rxjs/add/operator/switchMap';
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'manage.component.html'
+  templateUrl: 'manager.home.component.html'
 })
 
-export class ManageComponent implements OnInit {
+export class ManagerHomeComponent implements OnInit {
 
   currentUser: User;
   users: Observable<User[]>;
@@ -31,7 +32,7 @@ export class ManageComponent implements OnInit {
   }
 
   updateUser(user: User) {
-    this.router.navigate(['/admin/update', user.id]);
+    this.router.navigate(['/update', user.id]);
   }
   private loadAllUsers() {
     this.users = this.route.params

@@ -1,42 +1,54 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { User } from '../../users/index';
 import { AlertService, AuthenticationService } from '../../core/index';
 
 @Component({
-    moduleId: module.id,
-    templateUrl: 'login.component.html'
+  moduleId: module.id,
+  templateUrl: 'login.component.html'
 })
 
 export class LoginComponent implements OnInit {
-    model: any = {};
-    loading = false;
-    returnUrl: string;
+  user: User;
+  model: any = {};
+  loading = false;
+  //returnUrl: string;
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private authenticationService: AuthenticationService,
-        private alertService: AlertService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private alertService: AlertService) { }
 
-    ngOnInit() {
-        // reset login status
-        this.authenticationService.logout();
+  ngOnInit() {
+    // reset login status
+    this.authenticationService.logout();
 
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    }
+    // get return url from route parameters or default to '/'
+    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
 
-    login() {
-        this.loading = true;
-        this.authenticationService.login(this.model.username, this.model.password)
-            .subscribe(
-                data => {
-                    this.router.navigate([this.returnUrl]);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
-    }
+  login() {
+    this.loading = true;
+    this.authenticationService.login(this.model.username, this.model.password)
+      .subscribe(
+      data => {
+        this.user = JSON.parse(localStorage.getItem('currentUser'));
+        if (this.user.role == 'ADMIN') {
+          this.loading = false;
+          this.router.navigate(['/admin/home']);
+        } else
+          if (this.user.role == 'MANAGER') {
+            this.loading = false;
+            this.router.navigate(['/manager/home']);
+          } else {
+            this.loading = false;
+            this.router.navigate(['/manager/home']);
+          }
+      },
+      error => {
+        this.alertService.error(error);
+        this.loading = false;
+      });
+  }
 }
