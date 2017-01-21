@@ -63,9 +63,9 @@ public class DocumentController {
         return documentService.updateDocumentStatus(id, documentStatus, user);
     }
 
-    @RequestMapping(value = "/createFlux", method = RequestMethod.PUT)
-    public DocumentFlux createDocumentFlux(@RequestBody List<Document> documents, @RequestBody List<UserGroup> userGroups) {
-        return documentService.createDocumentFlux(documents, userGroups);
+    @RequestMapping(value = "/createFlux", method = RequestMethod.POST)
+    public DocumentFlux createDocumentFlux(@RequestBody DocumentFlux documentFlux) {
+        return documentService.createDocumentFlux(documentFlux.getDocuments(), documentFlux.getGroups());
     }
 
     @RequestMapping(value = "/flux/{id}", method = RequestMethod.GET)

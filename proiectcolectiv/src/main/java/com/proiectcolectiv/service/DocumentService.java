@@ -115,6 +115,15 @@ public class DocumentService {
     }
 
     public DocumentFlux createDocumentFlux(List<Document> documents, List<UserGroup> userGroups) {
+        List<User> users = new ArrayList<>();
+        for (UserGroup u : userGroups){
+            users.addAll(u.getUsers());
+        }
+        for (Document d : documents) {
+            for (User u : users) {
+//                userDocumentMappingRepository.save(new UserDocumentMapping(u, d));
+            }
+        }
         return documentFluxRepository.save(new DocumentFlux(documents, userGroups));
     }
 
