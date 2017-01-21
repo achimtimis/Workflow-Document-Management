@@ -70,6 +70,10 @@ public class DocumentController {
         return documentService.getAllDocumentFluxes();
 
     }
+    @RequestMapping(value = "/flux/{userid}", method = RequestMethod.GET)
+    public List<Document> getDocumentFluxesByUserId(@PathVariable int userid) {
+        return documentService.getDocumentFluxByUserId(userid);
+    }
 
     @RequestMapping(value = "/activewz", method = RequestMethod.GET)
     public List<Document> getActiveWorkZone() {

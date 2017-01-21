@@ -166,6 +166,9 @@ public class DocumentService {
         for (Document d : documents) {
             for (UserGroup u : userGroups) {
                 documentFluxRepository.save(new DocumentFlux(d, u, hashCode));
+                for (User user : u.getUsers()){
+                    userDocumentMappingRepository.save(new UserDocumentMapping(user,d));
+                }
             }
         }
 
@@ -233,6 +236,16 @@ public class DocumentService {
     public List<Document> getWorkZoneDocuments() {
         List<Document> result = new ArrayList<>();
         workZoneRepository.findAll().stream().forEach(d -> result.add(d.getTodoDocuments()));
+        return result;
+    }
+
+    public List<Document> getDocumentFluxByUserId(int userid) {
+        List<Document> result = new ArrayList<>();
+        for (UserDocumentMapping u: userDocumentMappingRepository.findAll()){
+            if (u.getUser().getId() == userid){
+                result.add(u.getDocument());
+            }
+        }
         return result;
     }
 }

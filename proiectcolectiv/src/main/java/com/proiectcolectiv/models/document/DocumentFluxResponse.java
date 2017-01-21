@@ -1,9 +1,7 @@
 package com.proiectcolectiv.models.document;
 
 import com.proiectcolectiv.models.user.UserGroup;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
