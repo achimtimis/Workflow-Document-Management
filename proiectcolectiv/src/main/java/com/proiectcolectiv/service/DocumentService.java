@@ -41,7 +41,7 @@ public class DocumentService {
 
     public Document createUserDocument(UserDocument document) {
         Document document1 = document.getDocument();
-        document1.setVersion("0.0.1");
+        document1.setVersion("1");
         document1.setStatus(DocumentStatus.DRAFT);
         document1.setAuthor(document.getUser().getUsername());
         document1.setCreationDate(new Date().toString());
@@ -66,8 +66,9 @@ public class DocumentService {
             documentRepository.save(newDocument);
             document.setLastEditedOn(new Date().toString());
             document.setLastEditedBy(user.getUsername());
-            Double version = Double.valueOf(document.getVersion());
-            document.setVersion(String.valueOf(version + 1));
+            int version = Integer.parseInt(found.getVersion());
+            version++;
+            document.setVersion(String.valueOf(version));
             userDocumentMappingRepository.save(new UserDocumentMapping(user, document));
             return documentRepository.save(document);
         }
