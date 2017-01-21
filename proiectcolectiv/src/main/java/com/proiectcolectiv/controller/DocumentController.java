@@ -4,6 +4,7 @@ import com.proiectcolectiv.models.document.Document;
 import com.proiectcolectiv.models.document.DocumentFlux;
 import com.proiectcolectiv.models.document.DocumentStatus;
 import com.proiectcolectiv.models.document.UserDocument;
+import com.proiectcolectiv.models.user.User;
 import com.proiectcolectiv.models.user.UserGroup;
 import com.proiectcolectiv.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,8 @@ public class DocumentController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Document updateDocument(@PathVariable int id, @RequestBody Document document) {
-        return documentService.updateDocument(id, document);
+    public Document updateDocument(@PathVariable int id, @RequestBody Document document, @RequestBody User user) {
+        return documentService.updateDocument(id, document,user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,32 +59,40 @@ public class DocumentController {
     }
 
     @RequestMapping(value = "/updateStatus/{id}", method = RequestMethod.PUT)
-    public Document updateDocumentStatus(@PathVariable int id, @RequestBody DocumentStatus documentStatus) {
-        return documentService.updateDocumentStatus(id, documentStatus);
+    public Document updateDocumentStatus(@PathVariable int id, @RequestBody DocumentStatus documentStatus, @RequestBody User user) {
+        return documentService.updateDocumentStatus(id, documentStatus, user);
     }
+
     @RequestMapping(value = "/createFlux", method = RequestMethod.PUT)
-    public DocumentFlux createDocumentFlux(@RequestBody List<Document> documents,@RequestBody List<UserGroup> userGroups) {
+    public DocumentFlux createDocumentFlux(@RequestBody List<Document> documents, @RequestBody List<UserGroup> userGroups) {
         return documentService.createDocumentFlux(documents, userGroups);
     }
+
     @RequestMapping(value = "/flux/{id}", method = RequestMethod.GET)
-    public DocumentFlux getDocumentFluxById(@PathVariable("id") int id){
+    public DocumentFlux getDocumentFluxById(@PathVariable("id") int id) {
         return documentService.getDocumentFluxbyId(id);
 
     }
+
     @RequestMapping(value = "/activewz", method = RequestMethod.GET)
-    public List<Document> getActiveWorkZone(){
+    public List<Document> getActiveWorkZone() {
         return documentService.getActizeWZDocuments();
     }
+
     @RequestMapping(value = "/completedwz", method = RequestMethod.GET)
-    public List<Document> getCompletedWorkZone(){
+    public List<Document> getCompletedWorkZone() {
         return documentService.getCompletedWZDocuments();
     }
+
     @RequestMapping(value = "/taskwz", method = RequestMethod.GET)
-    public List<Document> getTaskWorkZone(){
+    public List<Document> getTaskWorkZone() {
         return documentService.getTaskWZDocuments();
     }
+
     @RequestMapping(value = "/workzone", method = RequestMethod.GET)
-    public List<Document> getWorkZone(){
+    public List<Document> getWorkZone() {
         return documentService.getWorkZoneDocuments();
     }
+
+
 }

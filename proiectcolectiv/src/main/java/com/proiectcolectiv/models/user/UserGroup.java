@@ -1,6 +1,5 @@
 package com.proiectcolectiv.models.user;
 
-import com.proiectcolectiv.models.document.Document;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -30,7 +30,7 @@ public class DocumentService {
     @Autowired
     private CompletedWzRepository completedWzRepository;
     @Autowired
-    private TaskwzRepository taskWorkZone;
+    private TaskwzRepository taskwzRepository;
     @Autowired
     private WorkZoneRepository workZoneRepository;
 
@@ -48,6 +48,7 @@ public class DocumentService {
         document1.setLastEditedOn(new Date().toString());
         Document result = documentRepository.save(document.getDocument());
         userDocumentMappingRepository.save(new UserDocumentMapping(document.getUser(), result));
+        taskwzRepository.save(new TaskWorkZone(result));
         return result;
     }
 
@@ -55,11 +56,19 @@ public class DocumentService {
         return documentRepository.getOne(Long.valueOf(id));
     }
 
-    public Document updateDocument(int id, Document document) {
+    public Document updateDocument(int id, Document document, User user) {
         Document found = documentRepository.findOne(Long.valueOf(id));
         if (found != null) {
-            document.setId(Long.valueOf(id));
-            return documentRepository.saveAndFlush(document);
+            Long documentId = found.getId();
+            found.setId(null);
+            documentRepository.save(found);
+            document.setLastEditedOn(new Date().toString());
+            document.setLastEditedBy(user.getUsername());
+            Double version = Double.valueOf(document.getVersion());
+            document.setVersion(String.valueOf(version + 1));
+            document.setId(documentId);
+            userDocumentMappingRepository.save(new UserDocumentMapping(user, document));
+            return documentRepository.save(document);
         }
         return null;
     }
@@ -91,10 +100,17 @@ public class DocumentService {
         return result;
     }
 
-    public Document updateDocumentStatus(int id, DocumentStatus status) {
+    public Document updateDocumentStatus(int id, DocumentStatus status, User user) {
         Document document = documentRepository.findOne(Long.valueOf(id));
+        Long documentId = document.getId();
+        document.setId(null);
+        documentRepository.save(document);
         document.setStatus(status);
-        return documentRepository.saveAndFlush(document);
+        document.setLastEditedOn(new Date().toString());
+        document.setLastEditedBy(user.getUsername());
+        document.setId(documentId);
+        userDocumentMappingRepository.save(new UserDocumentMapping(user, document));
+        return documentRepository.save(document);
 
     }
 
@@ -120,7 +136,7 @@ public class DocumentService {
 
     public List<Document> getTaskWZDocuments() {
         List<Document> result = new ArrayList<>();
-        taskWorkZone.findAll().stream().forEach(d -> result.add(d.getTaskedDocuments()));
+        taskwzRepository.findAll().stream().forEach(d -> result.add(d.getTaskedDocuments()));
         return result;
     }
 
