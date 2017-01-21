@@ -4,16 +4,15 @@ import com.proiectcolectiv.models.document.Document;
 import com.proiectcolectiv.models.user.User;
 import lombok.Data;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Created by achy_ on 1/1/2017.
  */
-//@Data
+@Data
+@Entity
+@Table(name = "activewz")
 public class ActiveWorkZone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

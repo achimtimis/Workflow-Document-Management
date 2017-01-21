@@ -3,9 +3,8 @@ package com.proiectcolectiv.service;
 import com.proiectcolectiv.models.document.*;
 import com.proiectcolectiv.models.user.User;
 import com.proiectcolectiv.models.user.UserGroup;
-import com.proiectcolectiv.repository.DocumentFluxRepository;
-import com.proiectcolectiv.repository.DocumentRepository;
-import com.proiectcolectiv.repository.UserDocumentMappingRepository;
+import com.proiectcolectiv.models.workzones.TaskWorkZone;
+import com.proiectcolectiv.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,12 +25,20 @@ public class DocumentService {
 
     @Autowired
     private DocumentFluxRepository documentFluxRepository;
+    @Autowired
+    private ActiveWzRepository activeWzRepository;
+    @Autowired
+    private CompletedWzRepository completedWzRepository;
+    @Autowired
+    private TaskwzRepository taskWorkZone;
+    @Autowired
+    private WorkZoneRepository workZoneRepository;
 
     public Document createDocument(Document document) {
         return documentRepository.save(document);
     }
 
-    public Document createUserDocument(UserDocument document){
+    public Document createUserDocument(UserDocument document) {
         Document document1 = document.getDocument();
         document1.setVersion("0.0.1");
         document1.setStatus(DocumentStatus.DRAFT);
@@ -40,7 +47,7 @@ public class DocumentService {
         document1.setLastEditedBy(document.getUser().getUsername());
         document1.setLastEditedOn(new Date().toString());
         Document result = documentRepository.save(document.getDocument());
-        userDocumentMappingRepository.save(new UserDocumentMapping(document.getUser(),result));
+        userDocumentMappingRepository.save(new UserDocumentMapping(document.getUser(), result));
         return result;
     }
 
@@ -70,7 +77,7 @@ public class DocumentService {
     public List<Document> getAllDocumentsByUser(int id) {
         List<Document> result = new ArrayList<>();
         List<UserDocumentMapping> list = userDocumentMappingRepository.findAll();
-        for (UserDocumentMapping m : list){
+        for (UserDocumentMapping m : list) {
             if (m.getUser().getId() == id) {
                 result.add(documentRepository.getOne(m.getDocument().getId()));
             }
@@ -78,14 +85,31 @@ public class DocumentService {
         return result;
     }
 
-    public Document updateDocumentStatus(int id, DocumentStatus status){
+    public Document updateDocumentStatus(int id, DocumentStatus status) {
         Document document = documentRepository.findOne(Long.valueOf(id));
         document.setStatus(status);
         return documentRepository.saveAndFlush(document);
 
     }
 
-    public DocumentFlux createDocumentFlux (List<Document> documents, List<UserGroup> userGroups){
-        return documentFluxRepository.save(new DocumentFlux(documents,userGroups));
+    public DocumentFlux createDocumentFlux(List<Document> documents, List<UserGroup> userGroups) {
+        return documentFluxRepository.save(new DocumentFlux(documents, userGroups));
     }
+
+//    public List<Document> getActizeWZDocuments() {
+//        List<Document> result = new ArrayList<>();
+//        return activeWzRepository.findAll();
+//    }
+//
+//    public List<Document> getCompletedWZDocuments() {
+//        return completedWzRepository.findAll();
+//    }
+//
+//    public List<Document> getTaskWZDocuments() {
+//        return taskWorkZone.findAll();
+//    }
+//
+//    public List<Document> getWorkZoneDocuments() {
+//        return workZoneRepository.findAll();
+//    }
 }

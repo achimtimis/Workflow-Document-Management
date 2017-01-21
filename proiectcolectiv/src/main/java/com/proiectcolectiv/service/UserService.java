@@ -62,7 +62,15 @@ public class UserService {
 
 
     public void addUserToGroup(String info, User user) {
-        userGroupRepository.save(new UserGroup(info, Arrays.asList(user)));
+        List<UserGroup> users = findByGroup(info);
+        if (users.size() != 0) {
+            for (UserGroup userGroup : users) {
+                userGroup.getUsers().add(user);
+                userGroupRepository.save(userGroup);
+            }
+        }else{
+            userGroupRepository.save(new UserGroup(info, Arrays.asList(user)));
+        }
     }
 
     public List<UserGroup> getAllGroups() {
@@ -74,5 +82,8 @@ public class UserService {
             return true;
         }
         return false;
+    }
+    private List<UserGroup> findByGroup(String name){
+        return userGroupRepository.findByName(name);
     }
 }

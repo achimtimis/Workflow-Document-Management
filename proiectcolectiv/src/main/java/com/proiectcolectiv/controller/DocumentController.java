@@ -65,4 +65,20 @@ public class DocumentController {
     public DocumentFlux createDocumentFlux(@RequestBody List<Document> documents,@RequestBody List<UserGroup> userGroups) {
         return documentService.createDocumentFlux(documents, userGroups);
     }
+//    @RequestMapping(value = "/activewz", method = RequestMethod.GET)
+//    public List<Document> getActiveWorkZone(){
+//
+//    }
+//    @RequestMapping(value = "/completedwz", method = RequestMethod.GET)
+//    public List<Document> getCompletedWorkZone(){
+//
+//    }
+//    @RequestMapping(value = "/taskwz", method = RequestMethod.GET)
+//    public List<Document> getTaskWorkZone(){
+//
+//    }
+//    @RequestMapping(value = "/workzone, method = RequestMethod.GET)
+//    public List<Document> getWorkZone(){
+//
+//    }
 }
