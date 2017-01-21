@@ -31,7 +31,7 @@ export class ManageComponent implements OnInit {
   }
 
   updateUser(user: User) {
-    this.router.navigate(['/admin/update', user.id]);
+    this.router.navigate(['/updateUser', user.id]);
   }
   private loadAllUsers() {
     this.users = this.route.params

@@ -28,7 +28,7 @@ export class CreateComponent {
             .subscribe(
                 data => {
                     this.alertService.success('User created', true);
-                    this.router.navigate(['/admin/manage']);
+                    this.router.navigate(['/manageUsers']);
                 },
                 error => {
                     this.alertService.error(error);

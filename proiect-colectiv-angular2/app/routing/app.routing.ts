@@ -1,20 +1,22 @@
 ﻿import { Routes, RouterModule } from '@angular/router';
 
-import { AlertComponent,AuthGuard,AlertService, AuthenticationService } from '../core/index';
+import { AlertComponent, AuthGuard, AlertService, AuthenticationService } from '../core/index';
 import { UserService } from '../users/index';
-import { LoginComponent, RegisterComponent, HomeComponent, CreateComponent, UpdateComponent,
-          ManageComponent,ManagerHomeComponent,CreateDocumentComponent,ManageDocumentsComponent} from '../pages/index';
+import {
+  LoginComponent, RegisterComponent, HomeComponent, CreateComponent, UpdateComponent,
+  ManageComponent, ManagerHomeComponent, CreateDocumentComponent, ManageDocumentsComponent, UpdateDocumentComponent
+} from '../pages/index';
 
 const appRoutes: Routes = [
-  { path: 'admin/home', component: HomeComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent},
-  { path: 'admin/create', component: CreateComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
-  { path: 'admin/update/:id', component: UpdateComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
-  { path: 'admin/manage', component: ManageComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
-  { path: 'manager/home', component: ManagerHomeComponent, canActivate: [AuthGuard], data: {roles:['MANAGER']}},
-  { path: 'admin/documents/create', component: CreateDocumentComponent},
-  { path: 'admin/documents/manage', component: ManageDocumentsComponent},
+  { path: 'register', component: RegisterComponent },
+  { path: 'createUser', component: CreateComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
+  { path: 'updateUser/:id', component: UpdateComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
+  { path: 'manageUsers', component: ManageComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
+  { path: 'documents/create', component: CreateDocumentComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
+  { path: 'documents/manage', component: ManageDocumentsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
+  { path: 'documents/update/:id', component: UpdateDocumentComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
   { path: '**', redirectTo: 'login' }
 ];
 

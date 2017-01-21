@@ -29,7 +29,7 @@ export class CreateDocumentComponent {
             .subscribe(
                 data => {
                     this.alertService.success('Document Successfully Created', true);
-                    this.router.navigate(['/admin/home']);
+                    this.router.navigate(['/documents/manage']);
                 },
                 error => {
                     this.alertService.error(error);

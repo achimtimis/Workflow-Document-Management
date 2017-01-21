@@ -34,17 +34,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
       data => {
         this.user = JSON.parse(localStorage.getItem('currentUser'));
-        if (this.user.role == 'ADMIN') {
-          this.loading = false;
-          this.router.navigate(['/admin/home']);
-        } else
-          if (this.user.role == 'MANAGER') {
-            this.loading = false;
-            this.router.navigate(['/manager/home']);
-          } else {
-            this.loading = false;
-            this.router.navigate(['/manager/home']);
-          }
+        this.router.navigate(['/home']);
       },
       error => {
         this.alertService.error(error);

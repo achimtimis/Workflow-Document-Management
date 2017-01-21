@@ -2,41 +2,43 @@ import { Component } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 
 import { User, UserService } from '../../../users/index'
+import { Document, DocumentService } from '../../../documents/index';
 import { AlertService} from '../../../core/index';
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'update.component.html'
+  templateUrl: 'update.document.html'
 })
 
-export class UpdateComponent {
+export class UpdateDocumentComponent {
   model: any = {};
   loading = false;
   user: User ;
+  document: Document;
   currentUser : User = JSON.parse(localStorage.getItem('currentUser'));
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService,
+    private documentService: DocumentService,
     private alertService: AlertService) {
     
   }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-        let userId = params['id'];
-        this.userService.getById(userId).subscribe(user => { this.user = user; 
-          this.model = user;});
+        let documentId = params['id'];
+        this.documentService.getById(documentId).subscribe(document => { this.document = document; 
+          this.model = document;});
       });
   }
-  updateUser() {
+  updateDocument() {
     this.loading = true;
-    this.userService.update(this.model.id, this.model)
+    this.documentService.update(this.model.id, this.model)
       .subscribe(
       data => {
-        this.alertService.success('User updated', true);
-        this.router.navigate(['/manageUsers']);
+        this.alertService.success('Document updated', true);
+        this.router.navigate(['/documents/manage']);
       },
       error => {
         this.alertService.error(error);

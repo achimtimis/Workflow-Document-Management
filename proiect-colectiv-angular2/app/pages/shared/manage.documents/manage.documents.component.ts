@@ -32,7 +32,7 @@ export class ManageDocumentsComponent implements OnInit {
   }
 
   updateDocument(document: Document) {
-    this.router.navigate(['/admin/update/1']);
+    this.router.navigate(['/documents/update',document.id]);
   }
   private loadAllDocuments() {
     this.documents = this.route.params

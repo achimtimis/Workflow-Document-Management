@@ -50,19 +50,16 @@
 	</div>
 </nav>
 
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-6 col-md-offset-3" *ngIf="document">
 	<h2>Create a new Document</h2>
-	<form name="form" (ngSubmit)="f.form.valid && createNewDocument()"
+	<form name="form" (ngSubmit)="f.form.valid && updateDocument()"
 		#f="ngForm" novalidate>
-
-
-
 		<div class="form-group"
 			[ngClass]="{ 'has-error': f.submitted && !abstractText.valid }">
 			<label for="abstractText">Text</label> <input type="text"
 				class="form-control" name="abstractText"
 				[(ngModel)]="model.abstractText" #abstractText="ngModel" required />
-			<div *ngIf="f.submitted && !abstractText.valid" class="help-block">Role
+			<div *ngIf="f.submitted && !abstractText.valid" class="help-block">Text
 				is required</div>
 		</div>
 		<div class="form-group"
@@ -70,7 +67,7 @@
 			<label for="keywords">KeyWords</label> <input type="text"
 				class="form-control" name="keyword" [(ngModel)]="model.keywords"
 				#keywords="ngModel" required />
-			<div *ngIf="f.submitted && !keywords.valid" class="help-block">Role
+			<div *ngIf="f.submitted && !keywords.valid" class="help-block">Keywords
 				is required</div>
 		</div>
 
@@ -79,7 +76,7 @@
 			<label for="name">Document Name</label> <input type="text"
 				class="form-control" name="name" [(ngModel)]="model.name"
 				#name="ngModel" required />
-			<div *ngIf="f.submitted && !name.valid" class="help-block">Role
+			<div *ngIf="f.submitted && !name.valid" class="help-block">Document Name
 				is required</div>
 		</div>
 		<div class="form-group"
@@ -87,7 +84,7 @@
 			<label for="details">Details</label> <input type="text"
 				class="form-control" name="details" [(ngModel)]="model.details"
 				#details="ngModel" required />
-			<div *ngIf="f.submitted && !details.valid" class="help-block">Role
+			<div *ngIf="f.submitted && !details.valid" class="help-block">Details
 				is required</div>
 		</div>
 		<div class="form-group"
@@ -95,7 +92,7 @@
 			<label for="documentType">Document Type</label> <input type="text"
 				class="form-control" name="type" [(ngModel)]="model.documentType"
 				#documentType="ngModel" required />
-			<div *ngIf="f.submitted && !documentType.valid" class="help-block">Role
+			<div *ngIf="f.submitted && !documentType.valid" class="help-block">Document Type
 				is required</div>
 		</div>
 		<div class="form-group"
@@ -103,11 +100,11 @@
 			<label for="status">Document Status</label> <input type="text"
 				class="form-control" name="role" [(ngModel)]="model.status"
 				#status="ngModel" required />
-			<div *ngIf="f.submitted && !status.valid" class="help-block">Role
+			<div *ngIf="f.submitted && !status.valid" class="help-block">Status
 				is required</div>
 		</div>
 		<div class="form-group">
-			<button [disabled]="loading" class="btn btn-primary">Create</button>
+			<button [disabled]="loading" class="btn btn-primary">Update</button>
 			<img *ngIf="loading"
 				src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
 			<a [routerLink]="['/documents/manage']" class="btn btn-link">Cancel</a>

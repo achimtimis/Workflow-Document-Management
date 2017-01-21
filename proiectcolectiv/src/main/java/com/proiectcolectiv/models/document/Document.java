@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by achy_ on 1/1/2017.
  */
@@ -13,6 +15,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Document extends DocumentMetaData {
 
     public Document(Long id, String version, String author, String creationDate, String abstractText,
