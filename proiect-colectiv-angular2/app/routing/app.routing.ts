@@ -12,7 +12,7 @@ const appRoutes: Routes = [
   { path: 'admin/create', component: CreateComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
   { path: 'admin/update/:id', component: UpdateComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
   { path: 'admin/manage', component: ManageComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
-  { path: 'manager/home', component: ManagerHomeComponent, canActivate: [AuthGuard], data: {roles:['ADMIN','MANAGER']}},
+  { path: 'manager/home', component: ManagerHomeComponent, canActivate: [AuthGuard], data: {roles:['MANAGER']}},
   { path: '**', redirectTo: 'login' }
 ];
 

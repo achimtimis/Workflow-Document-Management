@@ -8,11 +8,24 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (!localStorage.getItem('currentUser')) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      return false;
+    }
     let roles = route.data["roles"] as Array<string>;
-    let tempUser : User = JSON.parse(localStorage.getItem('currentUser'));
+    let tempUser: User = JSON.parse(localStorage.getItem('currentUser'));
     let currentRole = tempUser.role;
-    if (localStorage.getItem('currentUser') && (roles.indexOf(currentRole) || currentRole == 'ADMIN')) {
-      // logged in so return true
+
+    let exist: boolean;
+    if (roles.length == 0) {
+      return true;
+    }
+    for (let entry of roles) {
+      if (entry == currentRole) {
+        exist = true;
+      }
+    }
+    if (exist) {
       return true;
     }
 
