@@ -1,9 +1,6 @@
 package com.proiectcolectiv.controller;
 
-import com.proiectcolectiv.models.document.Document;
-import com.proiectcolectiv.models.document.DocumentFlux;
-import com.proiectcolectiv.models.document.DocumentStatus;
-import com.proiectcolectiv.models.document.UserDocument;
+import com.proiectcolectiv.models.document.*;
 import com.proiectcolectiv.models.user.User;
 import com.proiectcolectiv.models.user.UserGroup;
 import com.proiectcolectiv.service.DocumentService;
@@ -64,13 +61,13 @@ public class DocumentController {
     }
 
     @RequestMapping(value = "/createFlux", method = RequestMethod.POST)
-    public DocumentFlux createDocumentFlux(@RequestBody DocumentFlux documentFlux) {
+    public DocumentFluxResponse createDocumentFlux(@RequestBody DocumentFluxResponse documentFlux) {
         return documentService.createDocumentFlux(documentFlux.getDocuments(), documentFlux.getGroups());
     }
 
-    @RequestMapping(value = "/flux/{id}", method = RequestMethod.GET)
-    public DocumentFlux getDocumentFluxById(@PathVariable("id") int id) {
-        return documentService.getDocumentFluxbyId(id);
+    @RequestMapping(value = "/flux", method = RequestMethod.GET)
+    public List<DocumentFluxResponse> getAllDocumentFluxes() {
+        return documentService.getAllDocumentFluxes();
 
     }
 

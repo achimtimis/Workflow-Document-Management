@@ -3,7 +3,10 @@ package com.proiectcolectiv.service;
 import com.proiectcolectiv.models.document.*;
 import com.proiectcolectiv.models.user.User;
 import com.proiectcolectiv.models.user.UserGroup;
+import com.proiectcolectiv.models.workzones.ActiveWorkZone;
+import com.proiectcolectiv.models.workzones.CompletedWorkZone;
 import com.proiectcolectiv.models.workzones.TaskWorkZone;
+import com.proiectcolectiv.models.workzones.WorkZone;
 import com.proiectcolectiv.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -83,6 +86,41 @@ public class DocumentService {
                 userDocumentMappingRepository.delete(u);
             }
         }
+        for (TaskWorkZone taskWorkZone : taskwzRepository.findAll()) {
+            {
+                if (taskWorkZone.getTaskedDocuments().getId() == found.getId()) {
+                    taskwzRepository.delete(taskWorkZone);
+                }
+            }
+        }
+        for (ActiveWorkZone taskWorkZone : activeWzRepository.findAll()) {
+            {
+                if (taskWorkZone.getActiveDocument().getId() == found.getId()) {
+                    activeWzRepository.delete(taskWorkZone);
+                }
+            }
+        }
+        for (CompletedWorkZone taskWorkZone : completedWzRepository.findAll()) {
+            {
+                if (taskWorkZone.getCompletedDocuments().getId() == found.getId()) {
+                    completedWzRepository.delete(taskWorkZone);
+                }
+            }
+        }
+        for (WorkZone taskWorkZone : workZoneRepository.findAll()) {
+            {
+                if (taskWorkZone.getTodoDocuments().getId() == found.getId()) {
+                    workZoneRepository.delete(taskWorkZone);
+                }
+            }
+        }
+        for (DocumentFlux dc : documentFluxRepository.findAll()) {
+
+            if (dc.getDocument().getId() == found.getId()) {
+                documentFluxRepository.delete(dc);
+            }
+        }
+
         documentRepository.delete(found);
     }
 
@@ -116,22 +154,63 @@ public class DocumentService {
 
     }
 
-    public DocumentFlux createDocumentFlux(List<Document> documents, List<UserGroup> userGroups) {
-        List<User> users = new ArrayList<>();
-        for (UserGroup u : userGroups) {
-            users.addAll(u.getUsers());
-        }
+    public DocumentFluxResponse createDocumentFlux(List<Document> documents, List<UserGroup> userGroups) {
+        List<DocumentFlux> users = new ArrayList<>();
+        int hashCode = 0;
         for (Document d : documents) {
-            for (User u : users) {
-//                userDocumentMappingRepository.save(new UserDocumentMapping(u, d));
+            for (UserGroup u : userGroups) {
+                hashCode = hashCode + d.hashCode() + u.hashCode();
             }
         }
-        return documentFluxRepository.save(new DocumentFlux(documents, userGroups));
+        hashCode= hashCode / 13;
+        for (Document d : documents) {
+            for (UserGroup u : userGroups) {
+                documentFluxRepository.save(new DocumentFlux(d, u, hashCode));
+            }
+        }
+
+        return null;
     }
 
-    public DocumentFlux getDocumentFluxbyId(int id) {
-        return documentFluxRepository.findOne(Long.valueOf(id));
+
+    public List<DocumentFluxResponse> getAllDocumentFluxes() {
+        List<Integer> hashCodes = new ArrayList<>();
+        List<DocumentFluxResponse> resultt= new ArrayList<>();
+        for (DocumentFlux d : documentFluxRepository.findAll()){
+            if (!hashCodes.contains(d.getHashCode())){
+                hashCodes.add(d.getHashCode());
+            }
+        }
+
+        for (int el : hashCodes){
+            List<DocumentFlux> documentFluxes = documentFluxRepository.findByHashCode(el);
+            List<UserGroup> userGroups = new ArrayList<>();
+            List<Document> documents = new ArrayList<>();
+            documents.add(documentFluxes.get(0).getDocument());
+            for (DocumentFlux f : documentFluxes){
+                userGroups.add(f.getGroup());
+
+            }
+            resultt.add(new DocumentFluxResponse(documents,userGroups));
+        }
+        return resultt;
     }
+//    public DocumentFlux getFluxById(int id){
+//        documentFluxRepository.getOne(id);
+//    }
+//    public DocumentFluxResponse getAllDocumentFluxes( ) {
+//        DocumentFluxResponse result = new DocumentFluxResponse();
+//        List<UserGroup> userGroups = new ArrayList<>();
+//        List<Document> documents = new ArrayList<>();
+//        List<DocumentFlux> documentFluxResponse = documentFluxRepository.findAll();
+//        for (DocumentFlux d : documentFluxResponse){
+//            userGroups.add(d.getGroup());
+//            documents.add(d.getDocument());
+//        }
+//        result.setDocuments(documents);
+//        result.setGroups(userGroups);
+//        return result;
+//    }
 
     public List<Document> getActizeWZDocuments() {
         List<Document> result = new ArrayList<>();

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by achy_ on 1/1/2017.
@@ -21,20 +20,24 @@ public class DocumentFlux {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(targetEntity=Document.class)
-    private List<Document> documents;
+    @OneToOne
+    private Document document;
 
-    @OneToMany(targetEntity=UserGroup.class )
-    private List<UserGroup> groups;
+    @OneToOne
+    private UserGroup group;
 
-    public DocumentFlux(List<Document> documents, List<UserGroup> groups) {
-        this.documents = documents;
-        this.groups = groups;
+    private int hashCode;
+
+    public DocumentFlux(Document document, UserGroup group,int hashCode) {
+        this.document = document;
+        this.group = group;
+        this.hashCode = hashCode;
     }
 
-    public DocumentFlux(Long id,List documents, List<UserGroup> groups) {
+    public DocumentFlux(Long id,Document documents, UserGroup group,int hashCode) {
         this.id = id;
-        this.documents = documents;
-        this.groups = groups;
+        this.document= documents;
+        this.group = group;
+        this.hashCode = hashCode;
     }
 }
