@@ -4,7 +4,8 @@ import { AlertComponent, AuthGuard, AlertService, AuthenticationService } from '
 import { UserService } from '../users/index';
 import {
   LoginComponent, RegisterComponent, HomeComponent, CreateComponent, UpdateComponent,
-  ManageComponent, ManagerHomeComponent, CreateDocumentComponent, ManageDocumentsComponent, UpdateDocumentComponent
+  ManageComponent, ManagerHomeComponent, CreateDocumentComponent, ManageDocumentsComponent, 
+  UpdateDocumentComponent, ManageGroupsComponent
 } from '../pages/index';
 
 const appRoutes: Routes = [
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
   { path: 'createUser', component: CreateComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
   { path: 'updateUser/:id', component: UpdateComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
   { path: 'manageUsers', component: ManageComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
+  { path: 'manageGroups', component: ManageGroupsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
   { path: 'documents/create', component: CreateDocumentComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
   { path: 'documents/manage', component: ManageDocumentsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
   { path: 'documents/update/:id', component: UpdateDocumentComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },

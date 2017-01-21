@@ -1,0 +1,55 @@
+<nav
+	class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-inverse">
+	<div class="container">
+		<ul class="nav navbar-nav" routerLinkActive="active">
+			<li class="nav-item"><a class="nav-link">You are logged in
+					as '{{currentUser.role}}'</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/home']">Home</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/manageUsers']">Manage Users</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/documents/create']">Create Document</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/documents/manage']">Manage Documents</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/login']">Logout</a></li>
+		</ul>
+	</div>
+</nav>
+
+<router-outlet></router-outlet>
+<div class="col-md-6 col-md-offset-3">
+	<h4>Current Groups:</h4>
+	<ul class="items">
+		<li *ngFor="let group of groups | async"><span class="badge">{{group.name}}</span>
+		<span *ngFor="let user of group.users "> {{user.username}}; </span>
+		</li>
+	</ul>
+</div>
+<div class="col-md-6 col-md-offset-3">
+	<h3>Add A New Group</h3>
+	<form name="form" (ngSubmit)="f.form.valid && addGroup()" #f="ngForm"
+		novalidate>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !name.valid }">
+			<label for="name">Group Name</label> <input type="text"
+				class="form-control" name="name" [(ngModel)]="model.name"
+				#name="ngModel" required />
+			<div *ngIf="f.submitted && !name.valid" class="help-block">Group
+				Name is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !id.valid }">
+			<label for="id">User Id</label> <input type="text" class="form-control"
+				name="id" [(ngModel)]="model.id" #id="ngModel" required />
+			<div *ngIf="f.submitted && !id.valid" class="help-block">Id is
+				required</div>
+		</div>
+		<div class="form-group">
+			<button [disabled]="loading" class="btn btn-primary">Add</button>
+			<img *ngIf="loading"
+				src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+		</div>
+	</form>
+</div>
