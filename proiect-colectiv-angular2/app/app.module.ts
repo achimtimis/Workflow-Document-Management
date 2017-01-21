@@ -6,10 +6,13 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { routing } from './routing/app.routing';
 
-import { AlertComponent,AuthGuard,AlertService, AuthenticationService } from './core/index';
+import { AlertComponent, AuthGuard, AlertService, AuthenticationService } from './core/index';
 import { UserService } from './users/index';
-import { HomeComponent,CreateComponent,UpdateComponent, RegisterComponent, LoginComponent,
-          ManageComponent,ManagerHomeComponent} from './pages/index';
+import { DocumentService } from './documents/index';
+import {
+  HomeComponent, CreateComponent, UpdateComponent, RegisterComponent, LoginComponent,
+  ManageComponent, ManagerHomeComponent, CreateDocumentComponent,ManageDocumentsComponent
+} from './pages/index';
 
 @NgModule({
   imports: [
@@ -27,13 +30,16 @@ import { HomeComponent,CreateComponent,UpdateComponent, RegisterComponent, Login
     CreateComponent,
     UpdateComponent,
     ManageComponent,
-    ManagerHomeComponent
+    ManagerHomeComponent,
+    CreateDocumentComponent,
+    ManageDocumentsComponent,
   ],
   providers: [
     AuthGuard,
     AlertService,
     AuthenticationService,
     UserService,
+    DocumentService
 
   ],
   bootstrap: [AppComponent]

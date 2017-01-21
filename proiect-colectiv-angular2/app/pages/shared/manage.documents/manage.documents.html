@@ -1,9 +1,3 @@
-<div class="page-header">
-	<p>
-		Welcome '{{currentUser.username}}' <small>You are logged in as
-			'{{currentUser.role}}'</small>
-	</p>
-</div>
 <nav
 	class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-inverse">
 	<div class="container">
@@ -25,3 +19,14 @@
 </nav>
 
 <router-outlet></router-outlet>
+<div class="col-md-5 col-md-offset-0">
+	<h4>Document List:</h4>
+	<ul class="items">
+		<li *ngFor="let document of documents | async"><span
+			class="badge">{{document.status}}</span> {{document.name}}, created
+			on : {{document.creationDate}} by: {{document.author}} <a
+			(click)="deleteDocument(document.id)">Delete</a> | <a
+			[class.selected]="isSelected(document)"
+			(click)="updateDocument(document)">Update</a></li>
+	</ul>
+</div>

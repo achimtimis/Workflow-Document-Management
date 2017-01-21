@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User, UserService } from '../../../users/index';
-import { AlertService } from '../../../core/index';
+import { User, UserService } from '../../users/index';
+import { UserDocument, DocumentService } from '../../documents/index';
+import { AlertService } from '../../core/index';
 
 @Component({
     moduleId: module.id,
-    templateUrl: 'create.component.html'
+    templateUrl: 'create.document.component.html'
 })
 
-export class CreateComponent {
+export class CreateDocumentComponent {
   
     currentUser: User;
     model: any = {};
@@ -17,18 +18,18 @@ export class CreateComponent {
 
     constructor(
         private router: Router,
-        private userService: UserService,
+        private documentService: DocumentService,
         private alertService: AlertService) { 
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
         
-     createNewUser(){
+     createNewDocument(){
        this.loading = true;
-       this.userService.create(this.model)
+       this.documentService.create(this.model,this.currentUser)
             .subscribe(
                 data => {
-                    this.alertService.success('User created', true);
-                    this.router.navigate(['/admin/manage']);
+                    this.alertService.success('Document Successfully Created', true);
+                    this.router.navigate(['/admin/home']);
                 },
                 error => {
                     this.alertService.error(error);

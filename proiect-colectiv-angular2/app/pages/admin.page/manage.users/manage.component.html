@@ -1,12 +1,21 @@
-<nav class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-inverse">
-    <div class="container">
-        <ul class="nav navbar-nav" routerLinkActive="active">
-        	<li class="nav-item"><a class="nav-link">You are logged in as '{{currentUser.role}}'</a></li>
-        	<li class="nav-item"><a class="nav-link" [routerLink]="['/admin/home']">Home</a></li>
-        	<li class="nav-item"><a class="nav-link" [routerLink]="['/admin/manage']">Manage Users</a></li>
-        	<li class="nav-item"><a class="nav-link" [routerLink]="['/login']">Logout</a></li>
-        </ul>
-    </div>
+<nav
+	class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-inverse">
+	<div class="container">
+		<ul class="nav navbar-nav" routerLinkActive="active">
+			<li class="nav-item"><a class="nav-link">You are logged in
+					as '{{currentUser.role}}'</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/admin/home']">Home</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/admin/manage']">Manage Users</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/admin/documents/create']">Create Document</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/admin/documents/manage']">Manage Documents</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/login']">Logout</a></li>
+		</ul>
+	</div>
 </nav>
 
 <router-outlet></router-outlet>
@@ -19,7 +28,7 @@
 		</li>
 	</ul>
 	<div class="form-group">
-            <a [routerLink]="['/admin/create']" class="btn btn-link">Create New User</a>
-            <a [routerLink]="['/admin/home']" class="btn btn-link">Cancel</a>
-        </div>
+		<a [routerLink]="['/admin/create']" class="btn btn-link">Create
+			New User</a> <a [routerLink]="['/admin/home']" class="btn btn-link">Cancel</a>
+	</div>
 </div>

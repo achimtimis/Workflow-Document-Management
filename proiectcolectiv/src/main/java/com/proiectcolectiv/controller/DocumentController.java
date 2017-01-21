@@ -55,7 +55,4 @@ public class DocumentController {
     public List<Document> getAllDocuments(@PathVariable int id) {
         return documentService.getAllDocumentsByUser(id);
     }
-
-
-
 }

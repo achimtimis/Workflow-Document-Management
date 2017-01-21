@@ -3,7 +3,7 @@
 import { AlertComponent,AuthGuard,AlertService, AuthenticationService } from '../core/index';
 import { UserService } from '../users/index';
 import { LoginComponent, RegisterComponent, HomeComponent, CreateComponent, UpdateComponent,
-          ManageComponent,ManagerHomeComponent} from '../pages/index';
+          ManageComponent,ManagerHomeComponent,CreateDocumentComponent,ManageDocumentsComponent} from '../pages/index';
 
 const appRoutes: Routes = [
   { path: 'admin/home', component: HomeComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
@@ -13,6 +13,8 @@ const appRoutes: Routes = [
   { path: 'admin/update/:id', component: UpdateComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
   { path: 'admin/manage', component: ManageComponent, canActivate: [AuthGuard], data: {roles:['ADMIN']} },
   { path: 'manager/home', component: ManagerHomeComponent, canActivate: [AuthGuard], data: {roles:['MANAGER']}},
+  { path: 'admin/documents/create', component: CreateDocumentComponent},
+  { path: 'admin/documents/manage', component: ManageDocumentsComponent},
   { path: '**', redirectTo: 'login' }
 ];
 

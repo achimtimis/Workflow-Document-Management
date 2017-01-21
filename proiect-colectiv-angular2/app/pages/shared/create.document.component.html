@@ -1,0 +1,119 @@
+<nav
+	class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-inverse">
+	<div class="container">
+		<ul class="nav navbar-nav" routerLinkActive="active">
+			<li class="nav-item"><a class="nav-link">You are logged in
+					as '{{currentUser.role}}'</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/home']">Home</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/manage']">Manage Users</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/admin/documents/create']">Create Document</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/admin/documents/manage']">Manage Documents</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/login']">Logout</a></li>
+		</ul>
+	</div>
+</nav>
+<div class="col-md-6 col-md-offset-3">
+	<h2>Create a new Document</h2>
+	<form name="form" (ngSubmit)="f.form.valid && createNewDocument()"
+		#f="ngForm" novalidate>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !version.valid }">
+			<label for="version">Version</label> <input type="text"
+				class="form-control" name="version" [(ngModel)]="model.version"
+				#version="ngModel" required />
+			<div *ngIf="f.submitted && !version.valid" class="help-block">Username
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !author.valid }">
+			<label for="author">Author</label> <input type="text"
+				class="form-control" name="author" [(ngModel)]="model.author"
+				#author="ngModel" required />
+			<div *ngIf="f.submitted && !author.valid" class="help-block">Password
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !creationDate.valid }">
+			<label for="creationDate">Creation Date</label> <input type="text"
+				class="form-control" name="creationDate"
+				[(ngModel)]="model.creationDate" #creationDate="ngModel" required />
+			<div *ngIf="f.submitted && !creationDate.valid" class="help-block">Role
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !abstractText.valid }">
+			<label for="abstractText">Text</label> <input type="text"
+				class="form-control" name="abstractText"
+				[(ngModel)]="model.abstractText" #abstractText="ngModel" required />
+			<div *ngIf="f.submitted && !abstractText.valid" class="help-block">Role
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !keywords.valid }">
+			<label for="keywords">KeyWords</label> <input type="text"
+				class="form-control" name="keyword" [(ngModel)]="model.keywords"
+				#keywords="ngModel" required />
+			<div *ngIf="f.submitted && !keywords.valid" class="help-block">Role
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !lastEditedOn.valid }">
+			<label for="lastEditedOn">LastEditedOn</label> <input type="text"
+				class="form-control" name="lastEditedOn"
+				[(ngModel)]="model.lastEditedOn" #lastEditedOn="ngModel" required />
+			<div *ngIf="f.submitted && !lastEditedOn.valid" class="help-block">Role
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !lastEditedBy.valid }">
+			<label for="lastEditedBy">LastEditedBy</label> <input type="text"
+				class="form-control" name="lastEditedBy"
+				[(ngModel)]="model.lastEditedBy" #lastEditedBy="ngModel" required />
+			<div *ngIf="f.submitted && !lastEditedBy.valid" class="help-block">Role
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !name.valid }">
+			<label for="name">Document Name</label> <input type="text"
+				class="form-control" name="name" [(ngModel)]="model.name"
+				#name="ngModel" required />
+			<div *ngIf="f.submitted && !name.valid" class="help-block">Role
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !details.valid }">
+			<label for="details">Details</label> <input type="text"
+				class="form-control" name="details" [(ngModel)]="model.details"
+				#details="ngModel" required />
+			<div *ngIf="f.submitted && !details.valid" class="help-block">Role
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !documentType.valid }">
+			<label for="documentType">Document Type</label> <input type="text"
+				class="form-control" name="type" [(ngModel)]="model.documentType"
+				#documentType="ngModel" required />
+			<div *ngIf="f.submitted && !documentType.valid" class="help-block">Role
+				is required</div>
+		</div>
+		<div class="form-group"
+			[ngClass]="{ 'has-error': f.submitted && !status.valid }">
+			<label for="status">Document Status</label> <input type="text"
+				class="form-control" name="role" [(ngModel)]="model.status"
+				#status="ngModel" required />
+			<div *ngIf="f.submitted && !status.valid" class="help-block">Role
+				is required</div>
+		</div>
+		<div class="form-group">
+			<button [disabled]="loading" class="btn btn-primary">Create</button>
+			<img *ngIf="loading"
+				src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+			<a [routerLink]="['/manage']" class="btn btn-link">Cancel</a>
+		</div>
+	</form>
+</div>
