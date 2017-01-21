@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by achy_ on 1/20/2017.
@@ -58,15 +59,15 @@ public class DocumentService {
 
     public Document updateDocument(int id, Document document, User user) {
         Document found = documentRepository.findOne(Long.valueOf(id));
+        Document newDocument = new Document(found.getVersion(), found.getAuthor(), found.getCreationDate(),
+                found.getAbstractText(), found.getKeywords(), found.getLastEditedOn(), found.getLastEditedBy(),
+                found.getName(), found.getDetails(), found.getDocumentType(), found.getStatus());
         if (found != null) {
-            Long documentId = found.getId();
-            found.setId(null);
-            documentRepository.save(found);
+            documentRepository.save(newDocument);
             document.setLastEditedOn(new Date().toString());
             document.setLastEditedBy(user.getUsername());
             Double version = Double.valueOf(document.getVersion());
             document.setVersion(String.valueOf(version + 1));
-            document.setId(documentId);
             userDocumentMappingRepository.save(new UserDocumentMapping(user, document));
             return documentRepository.save(document);
         }
@@ -116,7 +117,7 @@ public class DocumentService {
 
     public DocumentFlux createDocumentFlux(List<Document> documents, List<UserGroup> userGroups) {
         List<User> users = new ArrayList<>();
-        for (UserGroup u : userGroups){
+        for (UserGroup u : userGroups) {
             users.addAll(u.getUsers());
         }
         for (Document d : documents) {
