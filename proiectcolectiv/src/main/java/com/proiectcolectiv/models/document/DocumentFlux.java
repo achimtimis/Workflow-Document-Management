@@ -28,16 +28,16 @@ public class DocumentFlux {
     private List<Document> documents;
 
     @OneToMany(targetEntity=UserGroup.class )
-    private List<UserGroup> users;
+    private List<UserGroup> groups;
 
-    public DocumentFlux(List<Document> documents, List<UserGroup> users) {
+    public DocumentFlux(List<Document> documents, List<UserGroup> groups) {
         this.documents = documents;
-        this.users = users;
+        this.groups = groups;
     }
 
-    public DocumentFlux(Long id,List documents, List<UserGroup> users) {
+    public DocumentFlux(Long id,List documents, List<UserGroup> groups) {
         this.id = id;
         this.documents = documents;
-        this.users = users;
+        this.groups = groups;
     }
 }

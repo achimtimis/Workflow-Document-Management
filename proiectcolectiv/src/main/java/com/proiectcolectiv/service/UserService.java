@@ -32,8 +32,13 @@ public class UserService {
         return userRepository.findByUsernameAndPassword(username, password);
     }
 
-    public User createUser(@RequestBody User user){
-        return userRepository.saveAndFlush(user);
+    public User createUser(@RequestBody User user) throws Exception{
+        if (!isUserRegistered(user.getUsername())){
+            return userRepository.saveAndFlush(user);
+        }else{
+            throw new Exception("User already registered");
+        }
+
     }
 
     public User deleteUser(@PathVariable Long id){
@@ -62,5 +67,12 @@ public class UserService {
 
     public List<UserGroup> getAllGroups() {
         return userGroupRepository.findAll();
+    }
+
+    private boolean isUserRegistered(String username){
+        if (userRepository.findByUsername(username) != null){
+            return true;
+        }
+        return false;
     }
 }

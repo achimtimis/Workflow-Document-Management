@@ -34,8 +34,15 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    public User createUser(@RequestBody User user) throws Exception{
+        User result = null;
+        try {
+            return userService.createUser(user);
+        }
+        catch (Exception e){
+            //
+        }
+        return null;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
