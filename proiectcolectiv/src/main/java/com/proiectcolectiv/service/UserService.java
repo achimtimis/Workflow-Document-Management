@@ -1,13 +1,16 @@
 package com.proiectcolectiv.service;
 
+import com.proiectcolectiv.models.document.UserDocumentMapping;
 import com.proiectcolectiv.models.user.User;
 import com.proiectcolectiv.models.user.UserGroup;
+import com.proiectcolectiv.repository.UserDocumentMappingRepository;
 import com.proiectcolectiv.repository.UserGroupRepository;
 import com.proiectcolectiv.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +25,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private UserGroupRepository userGroupRepository;
+    @Autowired
+    private UserDocumentMappingRepository userDocumentMappingRepository;
 
     public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -43,6 +48,12 @@ public class UserService {
 
     public User deleteUser(@PathVariable Long id){
         User existingUser = userRepository.findOne(id);
+        List<UserDocumentMapping> mappings = userDocumentMappingRepository.findAll();
+        for (UserDocumentMapping u : mappings){
+            if (u.getUser().getId() == existingUser.getId()){
+                userDocumentMappingRepository.delete(u);
+            }
+        }
         userRepository.delete(existingUser);
         return existingUser;
     }

@@ -66,6 +66,12 @@ public class DocumentService {
 
     public void deleteDocumentById(int id) {
         Document found = documentRepository.getOne(Long.valueOf(id));
+        List<UserDocumentMapping> userDocumentMappings = userDocumentMappingRepository.findAll();
+        for (UserDocumentMapping u : userDocumentMappings){
+            if (u.getDocument().getId() == found.getId()){
+                userDocumentMappingRepository.delete(u);
+            }
+        }
         documentRepository.delete(found);
     }
 
@@ -94,6 +100,10 @@ public class DocumentService {
 
     public DocumentFlux createDocumentFlux(List<Document> documents, List<UserGroup> userGroups) {
         return documentFluxRepository.save(new DocumentFlux(documents, userGroups));
+    }
+
+    public DocumentFlux getDocumentFluxbyId(int id) {
+        return documentFluxRepository.findOne(Long.valueOf(id));
     }
 
 //    public List<Document> getActizeWZDocuments() {

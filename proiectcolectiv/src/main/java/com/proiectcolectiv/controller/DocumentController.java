@@ -65,6 +65,11 @@ public class DocumentController {
     public DocumentFlux createDocumentFlux(@RequestBody List<Document> documents,@RequestBody List<UserGroup> userGroups) {
         return documentService.createDocumentFlux(documents, userGroups);
     }
+    @RequestMapping(value = "/flux/{id}", method = RequestMethod.GET)
+    public DocumentFlux getDocumentFluxById(@PathVariable("id") int id){
+        return documentService.getDocumentFluxbyId(id);
+
+    }
 //    @RequestMapping(value = "/activewz", method = RequestMethod.GET)
 //    public List<Document> getActiveWorkZone(){
 //

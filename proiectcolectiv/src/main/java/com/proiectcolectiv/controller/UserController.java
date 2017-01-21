@@ -47,8 +47,7 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public User delete(@PathVariable Long id){
-        User existingUser = userService.getUserById(id);
-        userService.deleteUser(existingUser.getId());
+        User existingUser = userService.deleteUser(id);
         return existingUser;
     }
 
