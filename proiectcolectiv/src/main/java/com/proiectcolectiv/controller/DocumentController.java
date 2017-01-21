@@ -1,9 +1,10 @@
 package com.proiectcolectiv.controller;
 
 import com.proiectcolectiv.models.document.Document;
+import com.proiectcolectiv.models.document.DocumentFlux;
 import com.proiectcolectiv.models.document.DocumentStatus;
 import com.proiectcolectiv.models.document.UserDocument;
-import com.proiectcolectiv.models.user.User;
+import com.proiectcolectiv.models.user.UserGroup;
 import com.proiectcolectiv.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -46,7 +47,7 @@ public class DocumentController {
         return documentService.getDocumentById(id);
     }
 
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Document createUserDocument(@RequestBody UserDocument document) {
         return documentService.createUserDocument(document);
     }
@@ -54,5 +55,14 @@ public class DocumentController {
     @RequestMapping(value = "/byUser/{id}", method = RequestMethod.GET)
     public List<Document> getAllDocuments(@PathVariable int id) {
         return documentService.getAllDocumentsByUser(id);
+    }
+
+    @RequestMapping(value = "/updateStatus/{id}", method = RequestMethod.PUT)
+    public Document updateDocumentStatus(@PathVariable int id, @RequestBody DocumentStatus documentStatus) {
+        return documentService.updateDocumentStatus(id, documentStatus);
+    }
+    @RequestMapping(value = "/createFlux", method = RequestMethod.PUT)
+    public DocumentFlux createDocumentFlux(@RequestBody List<Document> documents,@RequestBody List<UserGroup> userGroups) {
+        return documentService.createDocumentFlux(documents, userGroups);
     }
 }

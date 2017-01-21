@@ -1,9 +1,9 @@
 package com.proiectcolectiv.service;
 
-import com.proiectcolectiv.models.document.Document;
-import com.proiectcolectiv.models.document.UserDocument;
-import com.proiectcolectiv.models.document.UserDocumentMapping;
+import com.proiectcolectiv.models.document.*;
 import com.proiectcolectiv.models.user.User;
+import com.proiectcolectiv.models.user.UserGroup;
+import com.proiectcolectiv.repository.DocumentFluxRepository;
 import com.proiectcolectiv.repository.DocumentRepository;
 import com.proiectcolectiv.repository.UserDocumentMappingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,17 @@ public class DocumentService {
     @Autowired
     private UserDocumentMappingRepository userDocumentMappingRepository;
 
+    @Autowired
+    private DocumentFluxRepository documentFluxRepository;
+
     public Document createDocument(Document document) {
         return documentRepository.save(document);
     }
 
     public Document createUserDocument(UserDocument document){
         Document document1 = document.getDocument();
+        document1.setVersion("0.0.1");
+        document1.setStatus(DocumentStatus.DRAFT);
         document1.setAuthor(document.getUser().getUsername());
         document1.setCreationDate(new Date().toString());
         document1.setLastEditedBy(document.getUser().getUsername());
@@ -71,5 +76,16 @@ public class DocumentService {
             }
         }
         return result;
+    }
+
+    public Document updateDocumentStatus(int id, DocumentStatus status){
+        Document document = documentRepository.findOne(Long.valueOf(id));
+        document.setStatus(status);
+        return documentRepository.saveAndFlush(document);
+
+    }
+
+    public DocumentFlux createDocumentFlux (List<Document> documents, List<UserGroup> userGroups){
+        return documentFluxRepository.save(new DocumentFlux(documents,userGroups));
     }
 }

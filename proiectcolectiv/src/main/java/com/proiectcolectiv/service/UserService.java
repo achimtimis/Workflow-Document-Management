@@ -1,12 +1,15 @@
 package com.proiectcolectiv.service;
 
 import com.proiectcolectiv.models.user.User;
+import com.proiectcolectiv.models.user.UserGroup;
+import com.proiectcolectiv.repository.UserGroupRepository;
 import com.proiectcolectiv.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,6 +20,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserGroupRepository userGroupRepository;
 
     public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -48,5 +53,14 @@ public class UserService {
 
     public User getUserById(@PathVariable("id") Long id){
         return userRepository.findOne(id);
+    }
+
+
+    public void addUserToGroup(String info, User user) {
+        userGroupRepository.save(new UserGroup(info, Arrays.asList(user)));
+    }
+
+    public List<UserGroup> getAllGroups() {
+        return userGroupRepository.findAll();
     }
 }

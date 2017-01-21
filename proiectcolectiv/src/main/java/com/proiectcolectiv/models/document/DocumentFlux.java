@@ -1,12 +1,14 @@
 package com.proiectcolectiv.models.document;
 
 import com.proiectcolectiv.models.user.User;
+import com.proiectcolectiv.models.user.UserGroup;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.print.Doc;
 import java.util.List;
 
 /**
@@ -22,21 +24,20 @@ public class DocumentFlux {
     @GeneratedValue
     private Long id;
 
+    @OneToMany(targetEntity=Document.class )
+    private List<Document> documents;
 
-    @ManyToOne
-    private Document document;
+    @OneToMany(targetEntity=UserGroup.class )
+    private List<UserGroup> users;
 
-    @OneToMany(targetEntity=User.class )
-    private List<User> users;
-
-    public DocumentFlux(Document document, List<User> users) {
-        this.document = document;
+    public DocumentFlux(List<Document> documents, List<UserGroup> users) {
+        this.documents = documents;
         this.users = users;
     }
 
-    public DocumentFlux(Long id,Document document, List users) {
+    public DocumentFlux(Long id,List documents, List<UserGroup> users) {
         this.id = id;
-        this.document = document;
+        this.documents = documents;
         this.users = users;
     }
 }

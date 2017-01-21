@@ -1,7 +1,7 @@
 package com.proiectcolectiv.controller;
 
 import com.proiectcolectiv.models.user.User;
-import com.proiectcolectiv.repository.UserRepository;
+import com.proiectcolectiv.models.user.UserGroup;
 import com.proiectcolectiv.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,6 +23,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<User> getAllUsers() {
+
         List<User> users = userService.getAllUsers();
         return users;
     }
@@ -53,6 +54,16 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUser(@PathVariable("id") Long id){
         return userService.getUserById(id);
+    }
+
+    @RequestMapping(value = "/addToGroup/{groupname}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void addUserToUserGroup(@PathVariable("groupname") String groupName, @RequestBody User user){
+        userService.addUserToGroup(groupName,user);
+
+    }
+    @RequestMapping(value = "/groups", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserGroup> getAllUserGroups(){
+        return userService.getAllGroups();
     }
 
 }
