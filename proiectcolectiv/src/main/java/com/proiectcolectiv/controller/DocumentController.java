@@ -2,6 +2,8 @@ package com.proiectcolectiv.controller;
 
 import com.proiectcolectiv.models.document.Document;
 import com.proiectcolectiv.models.document.DocumentStatus;
+import com.proiectcolectiv.models.document.UserDocument;
+import com.proiectcolectiv.models.user.User;
 import com.proiectcolectiv.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,8 +28,6 @@ public class DocumentController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Document> getAllDocuments() {
-//        Document d = new Document("a","a","a","a","a","a","a","a","a","a", DocumentStatus.BLOCKED);
-//        documentService.createDocument(d);
         return documentService.getAllDocuments();
     }
 
@@ -45,6 +45,12 @@ public class DocumentController {
     public Document getDocumentbyId(@PathVariable int id) {
         return documentService.getDocumentById(id);
     }
+
+    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    public Document createUserDocument(@RequestBody UserDocument document) {
+        return documentService.createUserDocument(document);
+    }
+
 
 
 }

@@ -1,10 +1,14 @@
 package com.proiectcolectiv.service;
 
 import com.proiectcolectiv.models.document.Document;
+import com.proiectcolectiv.models.document.UserDocument;
+import com.proiectcolectiv.models.document.UserDocumentMapping;
 import com.proiectcolectiv.repository.DocumentRepository;
+import com.proiectcolectiv.repository.UserDocumentMappingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,8 +19,22 @@ public class DocumentService {
     @Autowired
     private DocumentRepository documentRepository;
 
+    @Autowired
+    private UserDocumentMappingRepository userDocumentMappingRepository;
+
     public Document createDocument(Document document) {
         return documentRepository.save(document);
+    }
+
+    public Document createUserDocument(UserDocument document){
+        Document document1 = document.getDocument();
+        document1.setAuthor(document.getUser().getUsername());
+        document1.setCreationDate(new Date().toString());
+        document1.setLastEditedBy(document.getUser().getUsername());
+        document1.setLastEditedOn(new Date().toString());
+        Document result = documentRepository.save(document.getDocument());
+        userDocumentMappingRepository.save(new UserDocumentMapping(document.getUser(),result));
+        return result;
     }
 
     public Document getDocumentById(int id) {
