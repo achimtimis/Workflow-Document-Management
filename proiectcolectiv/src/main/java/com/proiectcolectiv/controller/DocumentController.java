@@ -39,8 +39,8 @@ public class DocumentController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Document updateDocument(@PathVariable int id, @RequestBody Document document, @RequestBody User user) {
-        return documentService.updateDocument(id, document,user);
+    public Document updateDocument(@PathVariable int id, @RequestBody UserDocument userdocument) {
+        return documentService.updateDocument(id, userdocument.getDocument(),userdocument.getUser());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
