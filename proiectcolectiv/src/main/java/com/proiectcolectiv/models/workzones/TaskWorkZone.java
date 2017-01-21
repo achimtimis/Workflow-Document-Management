@@ -16,6 +16,6 @@ public class TaskWorkZone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(targetEntity=Document.class )
-    private List<Document> taskedDocuments;
+    @OneToOne
+    private Document taskedDocuments;
 }

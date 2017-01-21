@@ -17,15 +17,14 @@ public class ActiveWorkZone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToOne
+    private Document activeDocument;
 
-    @OneToMany(targetEntity=Document.class )
-    private List<Document> activeDocuments;
-
-    public ActiveWorkZone(List<Document> activeDocuments) {
-        this.activeDocuments = activeDocuments;
+    public ActiveWorkZone(Document activeDocument) {
+        this.activeDocument = activeDocument;
     }
     public ActiveWorkZone(Long id,List<Document> activeDocuments) {
         this.id = id;
-        this.activeDocuments = activeDocuments;
+        this.activeDocument = activeDocument;
     }
 }

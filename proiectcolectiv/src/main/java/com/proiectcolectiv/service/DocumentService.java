@@ -67,8 +67,8 @@ public class DocumentService {
     public void deleteDocumentById(int id) {
         Document found = documentRepository.getOne(Long.valueOf(id));
         List<UserDocumentMapping> userDocumentMappings = userDocumentMappingRepository.findAll();
-        for (UserDocumentMapping u : userDocumentMappings){
-            if (u.getDocument().getId() == found.getId()){
+        for (UserDocumentMapping u : userDocumentMappings) {
+            if (u.getDocument().getId() == found.getId()) {
                 userDocumentMappingRepository.delete(u);
             }
         }
@@ -106,20 +106,27 @@ public class DocumentService {
         return documentFluxRepository.findOne(Long.valueOf(id));
     }
 
-//    public List<Document> getActizeWZDocuments() {
-//        List<Document> result = new ArrayList<>();
-//        return activeWzRepository.findAll();
-//    }
-//
-//    public List<Document> getCompletedWZDocuments() {
-//        return completedWzRepository.findAll();
-//    }
-//
-//    public List<Document> getTaskWZDocuments() {
-//        return taskWorkZone.findAll();
-//    }
-//
-//    public List<Document> getWorkZoneDocuments() {
-//        return workZoneRepository.findAll();
-//    }
+    public List<Document> getActizeWZDocuments() {
+        List<Document> result = new ArrayList<>();
+        activeWzRepository.findAll().stream().forEach(d -> result.add(d.getActiveDocument()));
+        return result;
+    }
+
+    public List<Document> getCompletedWZDocuments() {
+        List<Document> result = new ArrayList<>();
+        completedWzRepository.findAll().stream().forEach(d -> result.add(d.getCompletedDocuments()));
+        return result;
+    }
+
+    public List<Document> getTaskWZDocuments() {
+        List<Document> result = new ArrayList<>();
+        taskWorkZone.findAll().stream().forEach(d -> result.add(d.getTaskedDocuments()));
+        return result;
+    }
+
+    public List<Document> getWorkZoneDocuments() {
+        List<Document> result = new ArrayList<>();
+        workZoneRepository.findAll().stream().forEach(d -> result.add(d.getTodoDocuments()));
+        return result;
+    }
 }

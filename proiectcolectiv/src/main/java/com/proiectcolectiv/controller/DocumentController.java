@@ -70,20 +70,20 @@ public class DocumentController {
         return documentService.getDocumentFluxbyId(id);
 
     }
-//    @RequestMapping(value = "/activewz", method = RequestMethod.GET)
-//    public List<Document> getActiveWorkZone(){
-//
-//    }
-//    @RequestMapping(value = "/completedwz", method = RequestMethod.GET)
-//    public List<Document> getCompletedWorkZone(){
-//
-//    }
-//    @RequestMapping(value = "/taskwz", method = RequestMethod.GET)
-//    public List<Document> getTaskWorkZone(){
-//
-//    }
-//    @RequestMapping(value = "/workzone, method = RequestMethod.GET)
-//    public List<Document> getWorkZone(){
-//
-//    }
+    @RequestMapping(value = "/activewz", method = RequestMethod.GET)
+    public List<Document> getActiveWorkZone(){
+        return documentService.getActizeWZDocuments();
+    }
+    @RequestMapping(value = "/completedwz", method = RequestMethod.GET)
+    public List<Document> getCompletedWorkZone(){
+        return documentService.getCompletedWZDocuments();
+    }
+    @RequestMapping(value = "/taskwz", method = RequestMethod.GET)
+    public List<Document> getTaskWorkZone(){
+        return documentService.getTaskWZDocuments();
+    }
+    @RequestMapping(value = "/workzone", method = RequestMethod.GET)
+    public List<Document> getWorkZone(){
+        return documentService.getWorkZoneDocuments();
+    }
 }

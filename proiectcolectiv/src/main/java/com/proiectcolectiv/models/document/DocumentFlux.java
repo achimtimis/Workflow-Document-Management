@@ -24,7 +24,7 @@ public class DocumentFlux {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(targetEntity=Document.class )
+    @OneToMany(targetEntity=Document.class)
     private List<Document> documents;
 
     @OneToMany(targetEntity=UserGroup.class )

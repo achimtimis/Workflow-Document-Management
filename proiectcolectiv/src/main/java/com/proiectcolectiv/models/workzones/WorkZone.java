@@ -16,8 +16,7 @@ public class WorkZone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToMany(targetEntity=Document.class )
-    private List<Document> todoDocuments;
+    @OneToOne
+    private Document todoDocuments;
 
 }
