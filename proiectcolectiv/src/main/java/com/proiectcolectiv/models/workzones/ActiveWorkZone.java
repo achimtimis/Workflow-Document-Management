@@ -1,7 +1,6 @@
 package com.proiectcolectiv.models.workzones;
 
 import com.proiectcolectiv.models.document.Document;
-import com.proiectcolectiv.models.user.User;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,7 +22,8 @@ public class ActiveWorkZone {
     public ActiveWorkZone(Document activeDocument) {
         this.activeDocument = activeDocument;
     }
-    public ActiveWorkZone(Long id,List<Document> activeDocuments) {
+
+    public ActiveWorkZone(Long id, List<Document> activeDocuments) {
         this.id = id;
         this.activeDocument = activeDocument;
     }

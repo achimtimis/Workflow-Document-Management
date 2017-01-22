@@ -1,8 +1,10 @@
 package com.proiectcolectiv.controller;
 
-import com.proiectcolectiv.models.document.*;
+import com.proiectcolectiv.models.document.Document;
+import com.proiectcolectiv.models.document.DocumentFluxResponse;
+import com.proiectcolectiv.models.document.DocumentStatus;
+import com.proiectcolectiv.models.document.UserDocument;
 import com.proiectcolectiv.models.user.User;
-import com.proiectcolectiv.models.user.UserGroup;
 import com.proiectcolectiv.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -95,5 +97,13 @@ public class DocumentController {
         return documentService.getWorkZoneDocuments();
     }
 
+    @RequestMapping(value = "/flux/accept", method = RequestMethod.POST)
+    public Document accept(@RequestBody UserDocument document){
+        return documentService.acceptDocumentflux(document);
+    }
+    @RequestMapping(value = "/flux/deny", method = RequestMethod.POST)
+    public Document deny(@RequestBody UserDocument document){
+        return documentService.denyDocumentFlux(document);
+    }
 
 }

@@ -31,6 +31,7 @@ public class UserDocumentMapping {
         this.user = user;
         this.document = document;
     }
+
     public UserDocumentMapping(Long id, User user, Document document) {
         this.id = id;
         this.user = user;

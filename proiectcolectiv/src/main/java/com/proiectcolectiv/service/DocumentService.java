@@ -11,10 +11,10 @@ import com.proiectcolectiv.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by achy_ on 1/20/2017.
@@ -26,6 +26,9 @@ public class DocumentService {
 
     @Autowired
     private UserDocumentMappingRepository userDocumentMappingRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private DocumentFluxRepository documentFluxRepository;
@@ -162,12 +165,12 @@ public class DocumentService {
                 hashCode = hashCode + d.hashCode() + u.hashCode();
             }
         }
-        hashCode= hashCode / 13;
+        hashCode = hashCode / 13;
         for (Document d : documents) {
             for (UserGroup u : userGroups) {
                 documentFluxRepository.save(new DocumentFlux(d, u, hashCode));
-                for (User user : u.getUsers()){
-                    userDocumentMappingRepository.save(new UserDocumentMapping(user,d));
+                for (User user : u.getUsers()) {
+                    userDocumentMappingRepository.save(new UserDocumentMapping(user, d));
                 }
             }
         }
@@ -178,42 +181,26 @@ public class DocumentService {
 
     public List<DocumentFluxResponse> getAllDocumentFluxes() {
         List<Integer> hashCodes = new ArrayList<>();
-        List<DocumentFluxResponse> resultt= new ArrayList<>();
-        for (DocumentFlux d : documentFluxRepository.findAll()){
-            if (!hashCodes.contains(d.getHashCode())){
+        List<DocumentFluxResponse> resultt = new ArrayList<>();
+        for (DocumentFlux d : documentFluxRepository.findAll()) {
+            if (!hashCodes.contains(d.getHashCode())) {
                 hashCodes.add(d.getHashCode());
             }
         }
 
-        for (int el : hashCodes){
+        for (int el : hashCodes) {
             List<DocumentFlux> documentFluxes = documentFluxRepository.findByHashCode(el);
             List<UserGroup> userGroups = new ArrayList<>();
             List<Document> documents = new ArrayList<>();
             documents.add(documentFluxes.get(0).getDocument());
-            for (DocumentFlux f : documentFluxes){
+            for (DocumentFlux f : documentFluxes) {
                 userGroups.add(f.getGroup());
 
             }
-            resultt.add(new DocumentFluxResponse(documents,userGroups));
+            resultt.add(new DocumentFluxResponse(documents, userGroups));
         }
         return resultt;
     }
-//    public DocumentFlux getFluxById(int id){
-//        documentFluxRepository.getOne(id);
-//    }
-//    public DocumentFluxResponse getAllDocumentFluxes( ) {
-//        DocumentFluxResponse result = new DocumentFluxResponse();
-//        List<UserGroup> userGroups = new ArrayList<>();
-//        List<Document> documents = new ArrayList<>();
-//        List<DocumentFlux> documentFluxResponse = documentFluxRepository.findAll();
-//        for (DocumentFlux d : documentFluxResponse){
-//            userGroups.add(d.getGroup());
-//            documents.add(d.getDocument());
-//        }
-//        result.setDocuments(documents);
-//        result.setGroups(userGroups);
-//        return result;
-//    }
 
     public List<Document> getActizeWZDocuments() {
         List<Document> result = new ArrayList<>();
@@ -241,11 +228,61 @@ public class DocumentService {
 
     public List<Document> getDocumentFluxByUserId(int userid) {
         List<Document> result = new ArrayList<>();
-        for (UserDocumentMapping u: userDocumentMappingRepository.findAll()){
-            if (u.getUser().getId() == userid){
+        for (UserDocumentMapping u : userDocumentMappingRepository.findAll()) {
+            if (u.getUser().getId() == userid) {
                 result.add(u.getDocument());
             }
         }
         return result;
+    }
+
+    public Document acceptDocumentflux(UserDocument document) {
+        String group = userService.getUserGroupByUserId(document.getUser().getId());
+        List<UserGroup> users = userService.findByGroup(group);
+        UserGroup userGroup = users.get(0);
+        Document found = document.getDocument();
+        for (User u : userGroup.getUsers()){
+            deleteUserDocumentMappingByUserId(u.getId());
+        }
+        Document newDocument = new Document(found.getVersion(), found.getAuthor(), found.getCreationDate(),
+                found.getAbstractText(), found.getKeywords(), found.getLastEditedOn(), found.getLastEditedBy(),
+                found.getName(), found.getDetails(), found.getDocumentType(), found.getStatus());
+        documentRepository.save(newDocument);
+        document.getDocument().setLastEditedBy(document.getUser().getUsername());
+        document.getDocument().setLastEditedOn(new Date().toString());
+        int version = Integer.parseInt(document.getDocument().getVersion());
+        version++;
+        document.getDocument().setVersion(String.valueOf(version));
+        return documentRepository.save(document.getDocument());
+
+    }
+
+    private void deleteUserDocumentMappingByUserId(Long id) {
+        for (UserDocumentMapping u : userDocumentMappingRepository.findAll()){
+            if (u.getUser().getId() ==id){
+                userDocumentMappingRepository.delete(u);
+            }
+        }
+    }
+
+    public Document denyDocumentFlux(UserDocument document) {
+        String group = userService.getUserGroupByUserId(document.getUser().getId());
+        List<UserGroup> users = userService.findByGroup(group);
+        UserGroup userGroup = users.get(0);
+        Document found = documentRepository.findOne(Long.valueOf(document.getDocument().getId()));
+        for (User u : userGroup.getUsers()){
+            deleteUserDocumentMappingByUserId(u.getId());
+        }
+        Document newDocument = new Document(found.getVersion(), found.getAuthor(), found.getCreationDate(),
+                found.getAbstractText(), found.getKeywords(), found.getLastEditedOn(), found.getLastEditedBy(),
+                found.getName(), found.getDetails(), found.getDocumentType(), found.getStatus());
+        documentRepository.save(newDocument);
+        document.getDocument().setLastEditedBy(document.getUser().getUsername());
+        document.getDocument().setLastEditedOn(new Date().toString());
+        int version = Integer.parseInt(document.getDocument().getVersion());
+        version++;
+        document.getDocument().setVersion(String.valueOf(version));
+        document.getDocument().setStatus(DocumentStatus.DRAFT);
+        return documentRepository.save(document.getDocument());
     }
 }

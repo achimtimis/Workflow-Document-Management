@@ -33,33 +33,31 @@ public class UserService {
         return users;
     }
 
-    public User logIn(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
+    public User logIn(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password) {
         return userRepository.findByUsernameAndPassword(username, password);
     }
 
-    public User createUser(@RequestBody User user) throws Exception{
-        if (!isUserRegistered(user.getUsername())){
+    public User createUser(@RequestBody User user) throws Exception {
+        if (!isUserRegistered(user.getUsername())) {
             return userRepository.saveAndFlush(user);
-        }else{
+        } else {
             throw new Exception("User already registered");
         }
 
     }
 
-    public User deleteUser(@PathVariable Long id){
+    public User deleteUser(@PathVariable Long id) {
         User existingUser = userRepository.findOne(id);
         List<UserDocumentMapping> mappings = userDocumentMappingRepository.findAll();
-        for (UserDocumentMapping u : mappings){
-            if (u.getUser().getId() == existingUser.getId()){
+        for (UserDocumentMapping u : mappings) {
+            if (u.getUser().getId() == existingUser.getId()) {
                 userDocumentMappingRepository.delete(u);
             }
         }
-        for (UserGroup u : userGroupRepository.findAll()){
-//            for (User us : u.getUsers()){
+        for (UserGroup u : userGroupRepository.findAll()) {
             List<User> users = u.getUsers();
-            for (int i = 0; i<users.size();i++){
-                if (users.get(i).getId() == id){
-//                    userGroupRepository.delete(u);
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getId() == id) {
                     users.remove(i);
                     u.setUsers(users);
                     userGroupRepository.save(u);
@@ -71,7 +69,7 @@ public class UserService {
         return existingUser;
     }
 
-    public User updateUser(@PathVariable Long id, @RequestBody User user){
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
         User existingUser = userRepository.findOne(id);
         existingUser.setUsername(user.getUsername());
         existingUser.setPassword(user.getPassword());
@@ -80,7 +78,7 @@ public class UserService {
         return existingUser;
     }
 
-    public User getUserById(@PathVariable("id") Long id){
+    public User getUserById(@PathVariable("id") Long id) {
         return userRepository.findOne(id);
     }
 
@@ -92,7 +90,7 @@ public class UserService {
                 userGroup.getUsers().add(user);
                 userGroupRepository.save(userGroup);
             }
-        }else{
+        } else {
             userGroupRepository.save(new UserGroup(info, Arrays.asList(user)));
         }
     }
@@ -101,13 +99,28 @@ public class UserService {
         return userGroupRepository.findAll();
     }
 
-    private boolean isUserRegistered(String username){
-        if (userRepository.findByUsername(username) != null){
+    private boolean isUserRegistered(String username) {
+        if (userRepository.findByUsername(username) != null) {
             return true;
         }
         return false;
     }
-    private List<UserGroup> findByGroup(String name){
+
+    public List<UserGroup> findByGroup(String name) {
         return userGroupRepository.findByName(name);
+    }
+//    private List<User> findByGroup(String name) {
+//        return userGroupRepository.findByName(name);
+//    }
+
+
+    public String getUserGroupByUserId(long userid) {
+        String result = "";
+        for (UserGroup u : userGroupRepository.findAll()) {
+            if (u.getUsers().get(0).getId() == userid) {
+                result = u.getName();
+            }
+        }
+        return result;
     }
 }

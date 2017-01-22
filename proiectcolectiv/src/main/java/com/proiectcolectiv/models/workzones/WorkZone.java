@@ -4,7 +4,6 @@ import com.proiectcolectiv.models.document.Document;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by achy_ on 1/1/2017.

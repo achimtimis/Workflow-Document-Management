@@ -1,10 +1,10 @@
 package com.proiectcolectiv.models.document;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by achy_ on 1/1/2017.
@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name="document", schema = "public")
+@Table(name = "document", schema = "public")
 public class DocumentMetaData {
 
     @Id
@@ -39,6 +39,7 @@ public class DocumentMetaData {
         this.lastEditedOn = lastEditedOn;
         this.lastEditedBy = lastEditedBy;
     }
+
     public DocumentMetaData(String version, String author, String creationDate, String abstractText, String keywords, String lastEditedOn, String lastEditedBy) {
         this.version = version;
         this.author = author;

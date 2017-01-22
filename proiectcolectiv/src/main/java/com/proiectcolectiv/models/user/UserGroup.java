@@ -23,15 +23,16 @@ public class UserGroup {
 
     private String name;
 
-    @OneToMany(targetEntity=User.class )
+    @OneToMany(targetEntity = User.class)
     List<User> users;
 
     public UserGroup(String name, List<User> users) {
         this.name = name;
         this.users = users;
     }
-    public UserGroup(Long id,String name, List<User> users) {
-        this.id  = id;
+
+    public UserGroup(Long id, String name, List<User> users) {
+        this.id = id;
         this.name = name;
         this.users = users;
     }

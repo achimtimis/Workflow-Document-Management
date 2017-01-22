@@ -1,10 +1,11 @@
 package com.proiectcolectiv.models.document;
 
-import lombok.*;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Entity;
 
 /**
  * Created by achy_ on 1/1/2017.
@@ -32,6 +33,7 @@ public class Document extends DocumentMetaData {
         this.documentType = documentType;
         this.status = status;
     }
+
     public Document(String version, String author, String creationDate, String abstractText,
                     String keywords, String lastEditedOn, String lastEditedBy, String name,
                     String details, String documentType, DocumentStatus status) {
@@ -41,6 +43,7 @@ public class Document extends DocumentMetaData {
         this.documentType = documentType;
         this.status = status;
     }
+
     private String name;
 
     private String details;
