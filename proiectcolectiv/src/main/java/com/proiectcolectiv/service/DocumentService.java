@@ -62,7 +62,7 @@ public class DocumentService {
         } catch (IOException e) {
             // do something
         }
-//        userDocumentMappingRepository.save(new UserDocumentMapping(document.getUser(), result));
+        userDocumentMappingRepository.save(new UserDocumentMapping(document.getUser(), result));
         taskwzRepository.save(new TaskWorkZone(result));
         return result;
     }
@@ -248,7 +248,7 @@ public class DocumentService {
         String group = userService.getUserGroupByUserId(document.getUser().getId());
         List<UserGroup> users = userService.findByGroup(group);
         UserGroup userGroup = users.get(0);
-        Document found = document.getDocument();
+        Document found = documentRepository.findOne(document.getDocument().getId());
         for (User u : userGroup.getUsers()){
             deleteUserDocumentMappingByUserId(u.getId());
         }
