@@ -128,6 +128,7 @@ export class ManageDocumentsComponent implements OnInit {
   }
 
   private finalizeFlux() {
+    if(this.fluxDocuments.length != 0 && this.fluxGroups.length!=0){
     this.loading = true;
     this.documentService.addFlux(this.fluxDocuments, this.fluxGroups)
       .subscribe(
@@ -145,5 +146,6 @@ export class ManageDocumentsComponent implements OnInit {
         this.fluxGroups = [];
         this.loadAllFluxes();
       });
+  }
   }
 }

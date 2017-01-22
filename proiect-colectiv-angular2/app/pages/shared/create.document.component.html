@@ -13,6 +13,8 @@
 			<li class="nav-item"><a class="nav-link"
 				[routerLink]="['/documents/manage']">Manage Documents</a></li>
 			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/zones/manage']">Manage Zones</a></li>
+			<li class="nav-item"><a class="nav-link"
 				[routerLink]="['/login']">Logout</a></li>
 		</ul>
 	</div>
@@ -32,6 +34,8 @@
 			<li class="nav-item"><a class="nav-link"
 				[routerLink]="['/documents/mydocuments']">My Documents</a></li>
 			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/zones/manage']">Manage Zones</a></li>
+			<li class="nav-item"><a class="nav-link"
 				[routerLink]="['/login']">Logout</a></li>
 		</ul>
 	</div>
@@ -48,6 +52,8 @@
 				[routerLink]="['/documents/create']">Create Document</a></li>
 			<li class="nav-item"><a class="nav-link"
 				[routerLink]="['/documents/mydocuments']">My Documents</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/zones/manage']">Manage Zones</a></li>
 			<li class="nav-item"><a class="nav-link"
 				[routerLink]="['/login']">Logout</a></li>
 		</ul>
@@ -75,9 +81,9 @@
 		#f="ngForm" novalidate>
 		<div class="form-group"
 			[ngClass]="{ 'has-error': f.submitted && !abstractText.valid }">
-			<label for="abstractText">Text</label> <input type="text"
+			<label for="abstractText">Text</label> <textarea 
 				class="form-control" name="abstractText"
-				[(ngModel)]="model.abstractText" #abstractText="ngModel" required />
+				[(ngModel)]="model.abstractText" #abstractText="ngModel" required ></textarea>
 			<div *ngIf="f.submitted && !abstractText.valid" class="help-block">Role
 				is required</div>
 		</div>

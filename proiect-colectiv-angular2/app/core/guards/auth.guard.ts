@@ -17,19 +17,21 @@ export class AuthGuard implements CanActivate {
     let currentRole = tempUser.role;
 
     let exist: boolean;
-    if (roles.length == 0) {
+    if (roles == null) {
       return true;
+    } else {
+      if (roles.length == 0) {
+        return true;
+      }
     }
     for (let entry of roles) {
-      if (entry == currentRole) {
+      if (entry === currentRole) {
         exist = true;
       }
     }
     if (exist) {
       return true;
     }
-
-    // not logged in so redirect to login page with the return url
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }

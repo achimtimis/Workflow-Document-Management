@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   user: User;
   model: any = {};
   loading = false;
-  //returnUrl: string;
+  returnUrl: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,9 +23,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     // reset login status
     this.authenticationService.logout();
-
     // get return url from route parameters or default to '/'
-    //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   login() {

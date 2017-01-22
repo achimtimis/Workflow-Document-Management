@@ -4,24 +4,31 @@ import { AlertComponent, AuthGuard, AlertService, AuthenticationService } from '
 import { UserService } from '../users/index';
 import {
   LoginComponent, RegisterComponent, HomeComponent, CreateComponent, UpdateComponent,
-  ManageComponent, ManagerHomeComponent, CreateDocumentComponent, ManageDocumentsComponent, 
-  UpdateDocumentComponent, ManageGroupsComponent, DocumentViewComponent, ManageFluxComponent
+  ManageComponent, CreateDocumentComponent, ManageDocumentsComponent,
+  UpdateDocumentComponent, ManageGroupsComponent, DocumentViewComponent, ManageFluxComponent, ManageZonesComponent
 } from '../pages/index';
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'createUser', component: CreateComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
   { path: 'updateUser/:id', component: UpdateComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
   { path: 'manageUsers', component: ManageComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
   { path: 'manageGroups', component: ManageGroupsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-  { path: 'documents/create', component: CreateDocumentComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
-  { path: 'documents/manage', component: ManageDocumentsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
+  {
+    path: 'documents/create', component: CreateDocumentComponent, canActivate: [AuthGuard],
+    data: { roles: ['ADMIN', 'MANAGER', 'CONTRIBUTOR'] }
+  },
+  { path: 'zones/manage', component: ManageZonesComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER', 'CONTRIBUTOR'] } },
+  {
+    path: 'documents/manage', component: ManageDocumentsComponent, canActivate: [AuthGuard],
+    data: { roles: ['ADMIN', 'MANAGER'] }
+  },
   { path: 'documents/update/:id', component: UpdateDocumentComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
   { path: 'documents/mydocuments', component: ManageFluxComponent },
   { path: 'documents/view/:id', component: DocumentViewComponent },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: '/home' }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

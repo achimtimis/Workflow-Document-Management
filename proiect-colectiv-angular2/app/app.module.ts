@@ -11,8 +11,9 @@ import { UserService } from './users/index';
 import { DocumentService } from './documents/index';
 import {
   HomeComponent, CreateComponent, UpdateComponent, RegisterComponent, LoginComponent,
-  ManageComponent, ManagerHomeComponent, CreateDocumentComponent, ManageDocumentsComponent, 
+  ManageComponent, CreateDocumentComponent, ManageDocumentsComponent, 
   UpdateDocumentComponent, ManageGroupsComponent,DocumentViewComponent,ManageFluxComponent,
+  ManageZonesComponent,
 } from './pages/index';
 
 @NgModule({
@@ -31,13 +32,13 @@ import {
     CreateComponent,
     UpdateComponent,
     ManageComponent,
-    ManagerHomeComponent,
     CreateDocumentComponent,
     ManageDocumentsComponent,
     UpdateDocumentComponent,
     ManageGroupsComponent,
     DocumentViewComponent,
     ManageFluxComponent,
+    ManageZonesComponent,
   ],
   providers: [
     AuthGuard,
