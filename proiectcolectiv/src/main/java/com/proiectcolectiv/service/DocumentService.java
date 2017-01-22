@@ -294,6 +294,7 @@ public class DocumentService {
             document.getDocument().setStatus(DocumentStatus.FINAL);
         }else {
             document.getDocument().setStatus(DocumentStatus.BLOCKED);
+
         }
 
         Document newDocument = new Document(found.getVersion(), found.getAuthor(), found.getCreationDate(),
@@ -305,6 +306,9 @@ public class DocumentService {
         int version = Integer.parseInt(document.getDocument().getVersion());
         version++;
         document.getDocument().setVersion(String.valueOf(version));
+        CompletedWorkZone cwz = new CompletedWorkZone();
+        cwz.setCompletedDocuments(document.getDocument());
+        completedWzRepository.save(cwz);
         return documentRepository.save(document.getDocument());
     }
 }
