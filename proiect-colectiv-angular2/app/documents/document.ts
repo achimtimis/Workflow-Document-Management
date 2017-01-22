@@ -1,54 +1,34 @@
 export class Document {
 
+
+  public id: number;
+  public version: string;
+  public author: string;
+  public creationDate: string;
+  public abstractText: string;
+  public keywords: string;
+  public lastEditedOn: string;
+  public lastEditedBy: string;
+  public name: string;
+  public details: string;
+  public documentType: string;
+  public status: string;
   constructor(id: number, version: string, author: string, creationDate: string,
     abstractText: string, keywords: string, lastEditedOn: string, lastEditedBy: string,
-    name: string, details: string, documentType: string, status: string) { }
-
-  get id(): number {
-    return this.id;
+    name: string, details: string, documentType: string, status: string) {
+    this.id = id;
+    this.version = version;
+    this.author = author;
+    this.creationDate = creationDate;
+    this.abstractText = abstractText;
+    this.keywords = keywords;
+    this.lastEditedOn = lastEditedOn;
+    this.lastEditedBy = lastEditedBy;
+    this.name = name;
+    this.details = details;
+    this.documentType = documentType;
+    this.status = status;
   }
 
-  get version(): string {
-    return this.version;
-  }
 
-  get author(): string {
-    return this.author;
-  }
-
-  get creationDate(): string {
-    return this.creationDate;
-  }
-
-  get abstractText(): string {
-    return this.abstractText;
-  }
-
-  get keywords(): string {
-    return this.keywords;
-  }
-
-  get lastEditedOn(): string {
-    return this.lastEditedOn;
-  }
-
-  get lastEditedBy(): string {
-    return this.lastEditedBy;
-  }
-
-  get name(): string {
-    return this.name;
-  }
-
-  get details(): string {
-    return this.details;
-  }
-
-  get documentType(): string {
-    return this.documentType;
-  }
-
-  get status(): string {
-    return this.status;
-  }
 }

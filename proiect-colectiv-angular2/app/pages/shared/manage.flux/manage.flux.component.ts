@@ -91,7 +91,7 @@ export class ManageFluxComponent implements OnInit {
 
   denyDocument(id: number) {
    
-    this.documentService.getDocumentById(id).subscribe(document => { this.document = document });
+    this.documentService.getDocumentById(id).subscribe(document => { this.document = document;
     this.documentService.denyDocument(this.currentUser, this.document)
       .subscribe(
       data => {
@@ -101,13 +101,13 @@ export class ManageFluxComponent implements OnInit {
       error => {
         this.alertService.error(error);
         this.loading = false;
-      });
+      });});
+    
   }
 
 
   acceptDocument(id: number) {
-    this.documentService.getDocumentById(id).subscribe(document => { this.document = document });
-    this.documentService.acceptDocument(this.currentUser, this.document)
+    this.documentService.getDocumentById(id).subscribe(document => { this.document = document;this.documentService.acceptDocument(this.currentUser, this.document)
       .subscribe(
       data => {
         this.alertService.success('Document Accepted', true);
@@ -116,6 +116,7 @@ export class ManageFluxComponent implements OnInit {
       error => {
         this.alertService.error(error);
         this.loading = false;
-      });
+      }); });
+    
   }
 }

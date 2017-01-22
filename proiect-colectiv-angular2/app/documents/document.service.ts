@@ -61,7 +61,7 @@ export class DocumentService {
   }
 
   addFlux(documents: Array<Document>, userGroups: Array<Group>) {
-    let flux = new DocumentFlux(1, documents, userGroups);
+    let flux = new DocumentFlux(documents, userGroups);
     return this.http.post('http://localhost:8080/documents/createFlux/', flux, this.jwt()).map((response: Response) => response.json());
   }
 
