@@ -21,8 +21,8 @@ export class ManageFluxComponent implements OnInit {
   documents: Observable<Document[]>;
   users: Observable<User[]>;
   groups: Observable<Group[]>;
-  fluxes: Observable<DocumentFlux[]>;
-
+  fluxDocs: Observable<Document[]>;
+  document : Document;
   private selectedDocumentId: number;
   private selectedUserId: number;
   private selectedGroupId: number;
@@ -36,6 +36,7 @@ export class ManageFluxComponent implements OnInit {
 
   ngOnInit() {
     this.loadAllDocuments();
+    this.loadAllFluxes();
   }
 
   viewDocument(document: Document) {
@@ -59,9 +60,62 @@ export class ManageFluxComponent implements OnInit {
   }
 
   private loadAllDocuments() {
-    this.documents = this.route.params
+    if (this.currentUser.role == 'READER') {
+      this.documents = this.route.params
+        .switchMap((params: Params) => {
+          return this.documentService.getAll();
+        });
+    } else {
+      this.documents = this.route.params
+        .switchMap((params: Params) => {
+          return this.documentService.getById(this.currentUser.id);
+        });
+    }
+  }
+
+  private loadAllFluxes() {
+    this.fluxDocs = this.route.params
       .switchMap((params: Params) => {
         return this.documentService.getAllDocumentFluxForId(this.currentUser.id);
+      });
+  }
+
+  deleteDocument(id: number) {
+    this.documentService.delete(id).subscribe(() => { this.loadAllDocuments() });
+  }
+  isSelectedDocument(document: Document) { return true; }
+
+  updateDocument(document: Document) {
+    this.router.navigate(['/documents/update', document.id]);
+  }
+
+  denyDocument(id: number) {
+   
+    this.documentService.getDocumentById(id).subscribe(document => { this.document = document });
+    this.documentService.denyDocument(this.currentUser, this.document)
+      .subscribe(
+      data => {
+        this.alertService.success('Document Denied', true);
+        this.loadAllDocuments();
+      },
+      error => {
+        this.alertService.error(error);
+        this.loading = false;
+      });
+  }
+
+
+  acceptDocument(id: number) {
+    this.documentService.getDocumentById(id).subscribe(document => { this.document = document });
+    this.documentService.acceptDocument(this.currentUser, this.document)
+      .subscribe(
+      data => {
+        this.alertService.success('Document Accepted', true);
+        this.loadAllDocuments();
+      },
+      error => {
+        this.alertService.error(error);
+        this.loading = false;
       });
   }
 }

@@ -28,7 +28,7 @@ export class DocumentViewComponent {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       let documentId = params['id'];
-      this.documentService.getById(documentId).subscribe(document => {
+      this.documentService.getDocumentById(documentId).subscribe(document => {
       this.document = document;
         this.model = document;
       });

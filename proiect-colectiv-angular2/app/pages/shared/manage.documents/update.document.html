@@ -76,14 +76,14 @@
 </nav>
 
 <div class="col-md-6 col-md-offset-3" *ngIf="document">
-	<h2>Create a new Document</h2>
+	<h2>Update Your Document</h2>
 	<form name="form" (ngSubmit)="f.form.valid && updateDocument()"
 		#f="ngForm" novalidate>
 		<div class="form-group"
 			[ngClass]="{ 'has-error': f.submitted && !abstractText.valid }">
-			<label for="abstractText">Text</label> <input type="text"
+			<label for="abstractText">Text</label> <textarea type="text"
 				class="form-control" name="abstractText"
-				[(ngModel)]="model.abstractText" #abstractText="ngModel" required />
+				[(ngModel)]="model.abstractText" #abstractText="ngModel" required ></textarea>
 			<div *ngIf="f.submitted && !abstractText.valid" class="help-block">Text
 				is required</div>
 		</div>

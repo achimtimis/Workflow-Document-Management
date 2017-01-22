@@ -22,7 +22,10 @@ export class ManageZonesComponent implements OnInit {
   users: Observable<User[]>;
   groups: Observable<Group[]>;
   fluxes: Observable<DocumentFlux[]>;
-
+  workzone: Observable<Document[]>;
+  taskzone: Observable<Document[]>;
+  activezone: Observable<Document[]>;
+  completedzone: Observable<Document[]>;
   private selectedDocumentId: number;
   private selectedUserId: number;
   private selectedGroupId: number;
@@ -36,12 +39,48 @@ export class ManageZonesComponent implements OnInit {
 
   ngOnInit() {
     this.loadAllDocuments();
+    this.loadZones();
   }
 
   viewDocument(document: Document) {
     this.router.navigate(['/documents/view', document.id]);
   }
 
+
+  private loadZones() {
+    this.loadWorkZone();
+    this.loadTaskZone();
+    this.loadActiveZone();
+    this.loadCompletedZone();
+  }
+  private loadWorkZone() {
+    this.workzone = this.route.params
+      .switchMap((params: Params) => {
+        this.selectedUserId = +params['id'];
+        return this.documentService.getWorkZone();
+      });
+  }
+  private loadTaskZone() {
+    this.taskzone = this.route.params
+      .switchMap((params: Params) => {
+        this.selectedUserId = +params['id'];
+        return this.documentService.getTaskZone();
+      });
+  }
+  private loadActiveZone() {
+    this.activezone = this.route.params
+      .switchMap((params: Params) => {
+        this.selectedUserId = +params['id'];
+        return this.documentService.getActiveZone();
+      });
+  }
+  private loadCompletedZone() {
+    this.completedzone = this.route.params
+      .switchMap((params: Params) => {
+        this.selectedUserId = +params['id'];
+        return this.documentService.getCompletedZone();
+      });
+  }
   private loadAllUsers() {
     this.users = this.route.params
       .switchMap((params: Params) => {

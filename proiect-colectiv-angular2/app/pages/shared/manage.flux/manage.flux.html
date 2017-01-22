@@ -77,13 +77,12 @@
 
 <router-outlet></router-outlet>
 <div class="col-md-5 col-md-offset-0">
-	<h4>Your Documents:</h4>
-
+	<h4>Your Fluxes Documents:</h4>
 	<ul class="items">
-		<li *ngFor="let document of documents | async"><span
-			class="badge">v.{{document.version}} {{document.status}}</span>
-			{{document.name}}, created on : {{document.creationDate}} by:'
-			{{document.author}}' <a class="btn-btn-link"
-			(click)="viewDocument(document)"> View</a></li>
+		<li *ngFor="let document of fluxDocs | async"><span class="badge">v.{{document.version}}
+				{{document.status}}</span>Doc.Name: '{{document.name}}' <a
+			(click)="acceptDocument(document.id)">
+				Accept</a><a (click)="denyDocument(document.id)">
+				Deny</a></li>
 	</ul>
 </div>

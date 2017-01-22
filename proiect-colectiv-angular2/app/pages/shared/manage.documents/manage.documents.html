@@ -82,9 +82,9 @@
 	<ul class="items">
 		<li *ngFor="let document of documents | async"><span
 			class="badge">v.{{document.version}} {{document.status}}</span>
-			{{document.name}}, created on : {{document.creationDate}}
-			by:'{{document.author}}'<a (click)="deleteDocument(document.id)">
-				Delete</a> | <a [class.selected]="isSelectedDocument(document)"
+			{{document.name}};Created By:'{{document.author}}'<a
+			(click)="deleteDocument(document.id)"> Delete</a> | <a
+			[class.selected]="isSelectedDocument(document)"
 			(click)="updateDocument(document)">Update | </a><a
 			[class.selected]="isSelectedDocument(document)"
 			(click)="viewDocument(document)">View | </a><a

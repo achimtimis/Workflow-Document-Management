@@ -140,7 +140,6 @@ export class ManageDocumentsComponent implements OnInit {
         this.loadAllFluxes();
       },
       error => {
-        this.alertService.error(error);
         this.loading = false;
         this.fluxDocuments = [];
         this.fluxGroups = [];

@@ -43,7 +43,6 @@ export class ManageGroupsComponent implements OnInit {
           this.router.navigate(['/manageGroups']);
         },
         error => {
-          this.alertService.error(error);
           this.loading = false;
           this.loadAllGroups();
         });
