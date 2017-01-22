@@ -273,6 +273,14 @@ public class DocumentService {
             }
         }
     }
+    private UserDocumentMapping getUserDocumentMappingByDocument(Long documentid){
+        for (UserDocumentMapping u :userDocumentMappingRepository.findAll()){
+            if (u.getDocument().getId() == documentid){
+                return u;
+            }
+        }
+        return null;
+    }
 
     public Document denyDocumentFlux(UserDocument document) {
         String group = userService.getUserGroupByUserId(document.getUser().getId());
@@ -282,6 +290,12 @@ public class DocumentService {
         for (User u : userGroup.getUsers()){
             deleteUserDocumentMappingByUserId(u.getId());
         }
+        if (getUserDocumentMappingByDocument(found.getId()) == null){
+            document.getDocument().setStatus(DocumentStatus.FINAL);
+        }else {
+            document.getDocument().setStatus(DocumentStatus.BLOCKED);
+        }
+
         Document newDocument = new Document(found.getVersion(), found.getAuthor(), found.getCreationDate(),
                 found.getAbstractText(), found.getKeywords(), found.getLastEditedOn(), found.getLastEditedBy(),
                 found.getName(), found.getDetails(), found.getDocumentType(), found.getStatus());
@@ -291,7 +305,6 @@ public class DocumentService {
         int version = Integer.parseInt(document.getDocument().getVersion());
         version++;
         document.getDocument().setVersion(String.valueOf(version));
-        document.getDocument().setStatus(DocumentStatus.DRAFT);
         return documentRepository.save(document.getDocument());
     }
 }

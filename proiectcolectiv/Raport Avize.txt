@@ -1,0 +1,1 @@
+Document(name=Raport Avize, details=Raport Avize, documentType=DRAFT, status=DRAFT)

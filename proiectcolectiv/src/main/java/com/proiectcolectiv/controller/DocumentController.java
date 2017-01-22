@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Created by achy_ on 1/1/2017.
- */
 @RestController
 @CrossOrigin
 @RequestMapping("/documents")

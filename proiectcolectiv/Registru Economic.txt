@@ -1,0 +1,1 @@
+Document(name=Registru Economic, details=Registru Economic, documentType=REGISTRU, status=DRAFT)
