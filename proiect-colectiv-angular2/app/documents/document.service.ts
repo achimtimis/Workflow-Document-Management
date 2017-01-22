@@ -15,6 +15,12 @@ export class DocumentService {
     return this.http.get('http://localhost:8080/documents/all', this.jwt()).map((response: Response) => response.json());
   }
 
+  getAllFluxes() {
+    return this.http.get('http://localhost:8080/documents/flux', this.jwt()).map((response: Response) => response.json());
+  }
+  getAllDocumentFluxForId(id:number) {
+    return this.http.get('http://localhost:8080/documents/flux/'+id, this.jwt()).map((response: Response) => response.json());
+  }
   getById(id: number) {
     return this.http.get('http://localhost:8080/documents/' + id, this.jwt()).map((response: Response) => response.json());
   }
@@ -38,9 +44,10 @@ export class DocumentService {
 
   addFlux(documents: Array<Document>, userGroups: Array<Group>) {
     let flux = new DocumentFlux(1,documents,userGroups);
-    return this.http.post('http://localhost:8080/documents/createFlux', flux,
-      this.jwt()).map((response: Response) => response.json());
+    return this.http.post('http://localhost:8080/documents/createFlux/', flux, this.jwt()).map((response: Response) => response.json());
   }
+  
+  
   private jwt() {
     // create authorization header with jwt token
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));

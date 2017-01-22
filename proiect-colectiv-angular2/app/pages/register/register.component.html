@@ -13,7 +13,7 @@
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
             <label for="role">Role</label>
-            <input type="text" value="3" class="form-control" name="role" [(ngModel)]="model.role" #role="ngModel" required />
+            <input type="text" class="form-control" name="role" [(ngModel)]="model.role" #role="ngModel" required />
             <div *ngIf="f.submitted && !role.valid" class="help-block">Role is required</div>
         </div>
         <div class="form-group">

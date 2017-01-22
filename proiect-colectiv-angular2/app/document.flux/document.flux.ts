@@ -8,8 +8,9 @@ export class DocumentFlux {
   groups: Array<Group>;
 
   constructor(id: number, documents: Array<Document>, groups: Array<Group>) {
-    this.id = id;
+
     this.documents = documents;
     this.groups = groups;
+    this.id = id;
   }
 }

@@ -30,6 +30,25 @@
 			<li class="nav-item"><a class="nav-link"
 				[routerLink]="['/documents/manage']">Manage Documents</a></li>
 			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/documents/mydocuments']">My Documents</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/login']">Logout</a></li>
+		</ul>
+	</div>
+</nav>
+<nav *ngIf="currentUser.role==='CONTRIBUTOR'"
+	class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-inverse">
+	<div class="container">
+		<ul class="nav navbar-nav" routerLinkActive="active">
+			<li class="nav-item"><a class="nav-link">You are logged in
+					as '{{currentUser.role}}'</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/home']">Home</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/documents/create']">Create Document</a></li>
+			<li class="nav-item"><a class="nav-link"
+				[routerLink]="['/documents/mydocuments']">My Documents</a></li>
+			<li class="nav-item"><a class="nav-link"
 				[routerLink]="['/login']">Logout</a></li>
 		</ul>
 	</div>

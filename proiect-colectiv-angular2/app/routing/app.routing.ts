@@ -5,7 +5,7 @@ import { UserService } from '../users/index';
 import {
   LoginComponent, RegisterComponent, HomeComponent, CreateComponent, UpdateComponent,
   ManageComponent, ManagerHomeComponent, CreateDocumentComponent, ManageDocumentsComponent, 
-  UpdateDocumentComponent, ManageGroupsComponent, DocumentViewComponent
+  UpdateDocumentComponent, ManageGroupsComponent, DocumentViewComponent, ManageFluxComponent
 } from '../pages/index';
 
 const appRoutes: Routes = [
@@ -19,6 +19,7 @@ const appRoutes: Routes = [
   { path: 'documents/create', component: CreateDocumentComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
   { path: 'documents/manage', component: ManageDocumentsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
   { path: 'documents/update/:id', component: UpdateDocumentComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN', 'MANAGER'] } },
+  { path: 'documents/mydocuments', component: ManageFluxComponent },
   { path: 'documents/view/:id', component: DocumentViewComponent },
   { path: '**', redirectTo: 'login' }
 ];

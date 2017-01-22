@@ -39,11 +39,13 @@ export class ManageGroupsComponent implements OnInit {
         .subscribe(
         data => {
           this.alertService.success('Success!', true);
+          this.loadAllGroups();
           this.router.navigate(['/manageGroups']);
         },
         error => {
           this.alertService.error(error);
           this.loading = false;
+          this.loadAllGroups();
         });
     });
 

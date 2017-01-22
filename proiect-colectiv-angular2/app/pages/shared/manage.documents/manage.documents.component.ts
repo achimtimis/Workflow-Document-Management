@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AlertService } from '../../../core/index';
+import { DocumentFlux } from '../../../document.flux'
 import { User, UserService } from '../../../users/index';
 import { Group } from '../../../groups/group';
 import { Document, DocumentService } from '../../../documents/index';
@@ -20,6 +21,8 @@ export class ManageDocumentsComponent implements OnInit {
   documents: Observable<Document[]>;
   users: Observable<User[]>;
   groups: Observable<Group[]>;
+  fluxes: Observable<DocumentFlux[]>;
+  documente: Observable<Document[]>;
   fluxDocuments: Array<Document>;
   fluxGroups: Array<Group>;
 
@@ -27,6 +30,7 @@ export class ManageDocumentsComponent implements OnInit {
   private selectedUserId: number;
   private selectedGroupId: number;
   loading = false;
+  showStyle = false;
 
   constructor(private documentService: DocumentService, private alertService: AlertService,
     private userService: UserService, private route: ActivatedRoute, private router: Router) {
@@ -39,6 +43,7 @@ export class ManageDocumentsComponent implements OnInit {
     this.loadAllDocuments();
     this.loadAllUsers();
     this.loadAllGroups();
+    this.loadAllFluxes();
   }
 
   viewDocument(document: Document) {
@@ -58,7 +63,14 @@ export class ManageDocumentsComponent implements OnInit {
         return this.documentService.getAll();
       });
   }
-  isSelectedDocument(document: Document) { return document.id === this.selectedDocumentId; }
+  private loadAllDocumentse() {
+    this.documente = this.route.params
+      .switchMap((params: Params) => {
+        this.selectedDocumentId = +params['id'];
+        return this.documentService.getAll();
+      });
+  }
+  isSelectedDocument(document: Document) { return true; }
 
   private loadAllUsers() {
     this.users = this.route.params
@@ -78,12 +90,41 @@ export class ManageDocumentsComponent implements OnInit {
   }
   isSelectedGroup(group: Group) { return group.id === this.selectedGroupId; }
 
+  private loadAllFluxes() {
+    this.fluxes = this.route.params
+      .switchMap((params: Params) => {
+        return this.documentService.getAllFluxes();
+      });
+  }
+
   private addDocumentToFlux(document: Document) {
-    this.fluxDocuments.push(document);
+    if (!this.containsDocument(document)) {
+      this.fluxDocuments.push(document);
+    }
   }
 
   private addGroupToFlux(group: Group) {
-    this.fluxGroups.push(group);
+    if (!this.containsGroup(group)) {
+      this.fluxGroups.push(group);
+    }
+  }
+
+  containsDocument(document: Document) {
+    for (var i = 0; i < this.fluxDocuments.length; i++) {
+      if (this.fluxDocuments[i] === document) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  containsGroup(group: Group) {
+    for (var i = 0; i < this.fluxGroups.length; i++) {
+      if (this.fluxGroups[i] === group) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private finalizeFlux() {
@@ -93,10 +134,16 @@ export class ManageDocumentsComponent implements OnInit {
       data => {
         this.alertService.success('Success', true);
         this.router.navigate(['/manageGroups']);
+        this.fluxDocuments = [];
+        this.fluxGroups = [];
+        this.loadAllFluxes();
       },
       error => {
         this.alertService.error(error);
         this.loading = false;
+        this.fluxDocuments = [];
+        this.fluxGroups = [];
+        this.loadAllFluxes();
       });
   }
 }
