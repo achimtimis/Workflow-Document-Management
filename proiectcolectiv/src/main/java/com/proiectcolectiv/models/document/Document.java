@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 
@@ -16,6 +17,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @Entity
+@ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Document extends DocumentMetaData {
 

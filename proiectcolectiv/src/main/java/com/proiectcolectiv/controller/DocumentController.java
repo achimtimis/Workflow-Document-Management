@@ -101,6 +101,7 @@ public class DocumentController {
     public Document accept(@RequestBody UserDocument document){
         return documentService.acceptDocumentflux(document);
     }
+
     @RequestMapping(value = "/flux/deny", method = RequestMethod.POST)
     public Document deny(@RequestBody UserDocument document){
         return documentService.denyDocumentFlux(document);

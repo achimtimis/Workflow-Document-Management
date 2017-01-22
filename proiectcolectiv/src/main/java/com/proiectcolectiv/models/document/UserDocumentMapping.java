@@ -26,7 +26,6 @@ public class UserDocumentMapping {
     @OneToOne
     private Document document;
 
-
     public UserDocumentMapping(User user, Document document) {
         this.user = user;
         this.document = document;

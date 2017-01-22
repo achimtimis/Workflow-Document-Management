@@ -11,7 +11,8 @@ import com.proiectcolectiv.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.print.Doc;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +55,14 @@ public class DocumentService {
         document1.setLastEditedBy(document.getUser().getUsername());
         document1.setLastEditedOn(new Date().toString());
         Document result = documentRepository.save(document.getDocument());
-        userDocumentMappingRepository.save(new UserDocumentMapping(document.getUser(), result));
+        try{
+            PrintWriter writer = new PrintWriter(document1.getName() + ".txt", "UTF-8");
+            writer.println(document1.toString());
+            writer.close();
+        } catch (IOException e) {
+            // do something
+        }
+//        userDocumentMappingRepository.save(new UserDocumentMapping(document.getUser(), result));
         taskwzRepository.save(new TaskWorkZone(result));
         return result;
     }
@@ -244,6 +252,7 @@ public class DocumentService {
         for (User u : userGroup.getUsers()){
             deleteUserDocumentMappingByUserId(u.getId());
         }
+
         Document newDocument = new Document(found.getVersion(), found.getAuthor(), found.getCreationDate(),
                 found.getAbstractText(), found.getKeywords(), found.getLastEditedOn(), found.getLastEditedBy(),
                 found.getName(), found.getDetails(), found.getDocumentType(), found.getStatus());
